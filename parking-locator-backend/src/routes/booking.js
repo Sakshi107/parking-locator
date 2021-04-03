@@ -32,15 +32,48 @@ router.post("/checkin", async (req, res) => {
           res.json({ status: "FAILED", message: "You are too far away from the parking" });
         }
       } else {
-        res.json({ STATUS: "FAILED", message: "Slot is not empty" });
+        res.json({ status: "FAILED", message: "Slot is not empty" });
       }
     } else {
-      res.json({ STATUS: "FAILED", message: "Slot not found" });
+      res.json({ status: "FAILED", message: "Slot not found" });
     }
     if (isEmpty) {
     }
   } catch (error) {
-    throw error;
+    res.status(500).send({ message: error.message, errorType: error.name });
+  }
+});
+
+router.post("/bookPrior", async (req, res) => {
+  try {
+    const { spotID, startTime, duration } = req.body;
+    const { userID } = req.user;
+    const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
+    if (parkingSpot) {
+      const startTimeObj = moment(startTime);
+      const endTime = startTimeObj.clone().add(duration, "hours");
+      const startTimeMinutesSinceDayStart = startTimeObj.diff(startTimeObj.clone().startOf("day"), "minutes");
+      console.log(parkingSpot.activeHours.start, startTimeMinutesSinceDayStart);
+      if (
+        parkingSpot.activeHours.start <= startTimeMinutesSinceDayStart &&
+        parkingSpot.activeHours.end > startTimeMinutesSinceDayStart + 60 * duration
+      ) {
+        const booking = await ParkingHistory.create({
+          userID,
+          slotID: spotID,
+          advancedBooking: true,
+          estimatedStartTime: startTimeObj.toDate(),
+          estimatedEndTime: endTime.toDate(),
+          isConfirmed: true,
+        });
+        res.json({ status: "SUCCESS", bookingDetails: booking });
+      } else {
+        res.json({ status: "FAILED", message: "cannot book for this time duration." });
+      }
+    } else {
+      res.json({ status: "FAILED", message: "Slot not found" });
+    }
+  } catch (err) {
     res.status(500).send({ message: error.message, errorType: error.name });
   }
 });
