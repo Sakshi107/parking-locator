@@ -22,32 +22,35 @@ class NavDrawer extends StatelessWidget {
                       style: TextStyle(color: headingColor, fontSize: 28),
                     ),
                     CircleAvatar(
-                      maxRadius:35,
+                      maxRadius: 35,
                       backgroundColor: kMainColor,
                       child: Text(
                         "M",
-                        style: TextStyle(color:headingColor,fontSize: 40.0),
+                        style: TextStyle(color: headingColor, fontSize: 40.0),
                       ),
                     ),
                   ],
                 ),
               ),
             ),
-          ListTile(
-            title: Text('Add Spot'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/add_spot')},
-          ),
-        
-           Divider(color: kMainColor),
-          ListTile(
-            title: Text('My Parking slots'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/my_parking')},
-          ),
-          Divider(color: kMainColor),
-          
-        ],
+            ListTile(
+              title: Text('Add Spot'),
+              onTap: () => {Navigator.of(context).pushNamed('/add_spot')},
+            ),
+            Divider(color: kMainColor),
+            ListTile(
+              title: Text('My Parking slots'),
+              onTap: () => {Navigator.of(context).pushNamed('/my_spots')},
+            ),
+            Divider(color: kMainColor),
+            ListTile(
+              title: Text('My Bookings'),
+              onTap: () => {Navigator.of(context).pushNamed('/my_booking')},
+            ),
+            Divider(color: kMainColor),
+          ],
+        ),
       ),
-    ),
     );
   }
 }

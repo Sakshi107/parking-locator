@@ -29,7 +29,7 @@ class _AddSpotState extends State<AddSpot> {
           leading: GestureDetector(
               child: Icon(Icons.arrow_back_ios),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed('/');
               }),
           title: Text('Add a Parking Spot'),
         ),

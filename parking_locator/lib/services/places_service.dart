@@ -8,11 +8,11 @@ class PlacesService {
 
   Future<List<Place>> getPlaces(
       double lat, double lng, BitmapDescriptor icon) async {
-    var url =
-        Uri.parse('http://127.0.0.1:5000/parking/nearme/?lat=$lat&long=$lng&radius=10000');
+    var url = Uri.parse(
+        'http://127.0.0.1:5000/parking/nearme/?lat=$lat&long=$lng&radius=10000');
     print(url);
     String token =
-        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
     var response = await http.get(
       url,
       headers: {
@@ -35,7 +35,9 @@ class PlacesService {
       print(jsonResults[i]['Location']['coordinates'][0]);
       print(jsonResults[i]['activeHours']);
     }
-    print(jsonResults.map((place) => Place.fromJson(place,icon)).toList());
-    return jsonResults.map<Place>((place) => Place.fromJson(place,icon)).toList();
+    print(jsonResults.map((place) => Place.fromJson(place, icon)).toList());
+    return jsonResults
+        .map<Place>((place) => Place.fromJson(place, icon))
+        .toList();
   }
 }
