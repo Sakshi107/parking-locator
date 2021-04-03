@@ -17,10 +17,10 @@ router.get("/nearme", async (req, res) => {
         Location: {
           $near: { $geometry: { type: "Point", coordinates: [lat, long] }, $maxDistance: radius },
         },
-        $and: [
-          { "activeHours.start": { $lte: currentTimeinMinutesFromStartOfDay } },
-          { "activeHours.end": { $gte: currentTimeinMinutesFromStartOfDay } },
-        ],
+        // $and: [
+        //   { "activeHours.start": { $lte: currentTimeinMinutesFromStartOfDay } },
+        //   { "activeHours.end": { $gte: currentTimeinMinutesFromStartOfDay } },
+        // ],
         isEmpty: true,
       },
       { slotID: 1, "Location.coordinates": 1 ,"address":1,"activeHours":1}
