@@ -4,7 +4,7 @@ import 'dart:convert' as convert;
 import 'package:parking_locator/models/place.dart';
 
 class DbMethods {
-  addSpot(lat, long, startTime, endTime, address, type,cost) async {
+  addSpot(lat, long, startTime, endTime, address, type, cost) async {
     String token =
         "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
     // try {
@@ -140,6 +140,28 @@ class DbMethods {
     }
   }
 
+  userHistory() async {
+    String token =
+        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
+    // try {
+    var url = Uri.parse('http://127.0.0.1:5000/user/bookings');
+    print(url);
+    var res = await http.get(
+      url,
+      headers: {
+        "authorization": token,
+        "Content-Type": "application/json",
+      },
+    );
+    var json = convert.jsonDecode(res.body);
+    print("hi");
+    print(json);
+
+    var jsonResults = json['bookings'];
+    print(jsonResults);
+    return jsonResults;
+  }
+
 //get details of a parkspot
   Future getPlaceDetails(String spotId) async {
     var url = Uri.parse('http://127.0.0.1:5000/parking/$spotId');
@@ -195,7 +217,7 @@ class DbBookingMethods {
     }
   }
 
-   PriorBook(spotid, startTime,duration) async {
+  PriorBook(spotid, startTime, duration) async {
     print("imhere");
 
     String token =
@@ -208,7 +230,7 @@ class DbBookingMethods {
       body: convert.json.encode({
         "spotID": spotid,
         "startTime": startTime,
-        "duration":duration,
+        "duration": duration,
       }),
       headers: {
         "authorization": token,
@@ -228,7 +250,6 @@ class DbBookingMethods {
       throw Exception('Failed to see booking.');
     }
   }
-
 
   confirmBook(spotid, bookingid) async {
     print("imhere");

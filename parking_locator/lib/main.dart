@@ -7,6 +7,7 @@ import 'package:parking_locator/screens/authentication/auth2.dart';
 import 'package:parking_locator/screens/addSpot.dart';
 import 'package:parking_locator/screens/mySpots.dart';
 import 'package:parking_locator/screens/placeDetails.dart';
+import 'package:parking_locator/screens/userHistory.dart';
 
 import 'package:parking_locator/screens/search.dart';
 
@@ -59,6 +60,7 @@ class MyApp extends StatelessWidget {
             '/add_spot': (context) => AddSpot(),
             '/my_spots': (context) => MySpots(),
             '/place_details': (context) => PlaceDetails(),
+            '/my_booking': (context) => MyHistory(),
           },
         ));
   }
