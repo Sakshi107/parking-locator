@@ -52,10 +52,9 @@ var camera = document.getElementById("camera");
 window.addEventListener(
   "load",
   function () {
-    var constraints = { audio: true, video: true };
+    var constraints = { video: true };
 
     function success(stream) {
-      console.log("here");
       cameraStream = stream;
       camera.srcObject = stream;
       var playPromise = camera.play();
@@ -67,9 +66,7 @@ window.addEventListener(
             }, 1000);
           })
           .catch(function (error) {
-            console.log(error);
-            // Automatic playback failed.
-            // Show a UI element to let the user manually start playback.
+            console.error(error);
           });
       }
     }
@@ -84,7 +81,6 @@ window.addEventListener(
   false
 );
 function sendToServer() {
-  console.log("here");
   var fd = new FormData();
   var dataURI = snapshot.firstChild.getAttribute("src");
   var imageData = dataURItoBlob(dataURI);

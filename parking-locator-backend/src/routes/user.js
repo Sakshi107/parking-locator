@@ -12,7 +12,7 @@ router.get("/", (req, res) => {
 
 router.post("/myParking", async (req, res) => {
   try {
-    const { lat, long, startTime, endTime, address } = req.body;
+    const { lat, long, startTime, endTime, address, parkingType, chargesPerHour } = req.body;
     const { userID } = req.user;
     const startTimeObj = moment(startTime, TIME_FORMAT);
     const endTimeObj = moment(endTime, TIME_FORMAT);
@@ -26,6 +26,8 @@ router.post("/myParking", async (req, res) => {
         end: endTimeObj.diff(startOfDay, "minutes"),
       },
       address,
+      parkingType,
+      chargesPerHour,
     });
     res.json({ status: "SUCCESS", parking });
   } catch (error) {
