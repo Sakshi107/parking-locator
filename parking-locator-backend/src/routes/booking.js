@@ -14,7 +14,7 @@ router.post("/checkin", async (req, res) => {
   const { userID } = req.user;
   const { spotID, lat, long } = req.body;
 
-  const imageIfFull = "http://www.theshadestudio.co.in/wp-content/uploads/photo-gallery/thumb/DSC03643.jpg";
+  const imageIfFull = "https://martolex-book-images.s3.ap-south-1.amazonaws.com/car-1.jpeg";
   try {
     const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
     if (parkingSpot) {
