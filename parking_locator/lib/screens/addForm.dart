@@ -155,7 +155,7 @@ class _AddFormState extends State<AddForm> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text("Error"),
+            title: Text("Message"),
             content: Container(
               child: Text(error),
             ),
@@ -171,18 +171,17 @@ class _AddFormState extends State<AddForm> {
         });
   }
 
-  Future<String> add() async {
+  Future<dynamic> add() async {
     print(startTime);
     print(endTime);
     var start = formatTimeOfDay(startTime).toString();
     var end = formatTimeOfDay(endTime).toString();
-    print("end"+end);
+    print("end" + end);
 //         toTime: formatTimeOfDay(selectedToTime).toString(),
-    await _addSpot
-        .addSpot(_lat, _long, start, end, address, parkingtype)
-        .then((obj) => print("Added parking spot"))
-        .catchError((error) => print("Failed to add the parking spot: $error"));
-    return "xyz";
+    return await _addSpot.addSpot(_lat, _long, start, end, address, parkingtype, 1000)
+        // .then((obj) => return "Added parking spot";
+        // .catchError((error) => return "Failed to add the parking spot: $error";
+        ;
   }
 
   void _submit() async {
@@ -206,14 +205,18 @@ class _AddFormState extends State<AddForm> {
     print(endTime);
     print(parkingtype);
     print(address);
-    String _addSpotFeedback = await add();
-    if (_addSpotFeedback != null) {
-      _alertDialogBuilder(_addSpotFeedback);
+    var obj = await add();
+    print("imhereee");
+    print(obj);
+    if (obj["status"] == "SUCCESS") {
+      _alertDialogBuilder("Your parking spot has been added");
 
       setState(() {
         _formLoading = false;
       });
+      //Navigator.pop(context);
     } else {
+      _alertDialogBuilder("Unable to add your parking spot");
       Navigator.pop(context);
     }
   }
@@ -396,6 +399,12 @@ class _AddFormState extends State<AddForm> {
                   ),
                 ],
               ),
+              // CustomFormField(
+              //     labelText: "Charge per hour" + '\u{20B9}',
+              //     // validatorStr: "the text",
+              //     //prefixicon: Icons.search,
+              //     onChanged: (val) => cost = int.parse(val))
+              // ,
               Center(
                   child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -424,19 +433,19 @@ class _AddFormState extends State<AddForm> {
 }
 
 class CustomFormField extends StatelessWidget {
-  // final Function onChanged;
+  final Function onChanged;
   final String labelText;
   final IconData prefixicon;
   final String text;
 
   CustomFormField({
-    // @required this.onChanged,
+    @required this.onChanged,
     @required this.labelText,
     @required this.text,
     @required this.prefixicon,
   });
-  // assert(onChanged != null),
-  // assert(validatorStr != null);
+   //assert(onChanged != null),
+   //assert(validatorStr != null);
 
   @override
   Widget build(BuildContext context) {
