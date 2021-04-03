@@ -73,7 +73,13 @@ router.get("/myParking", async (req, res) => {
   try {
     const { userID } = req.user;
     const parkings = await ParkingLocations.find({ userID });
-    res.json({ status: "SUCCESS", parkings });
+    const parkingsRes = parkings.map((parking) => {
+      const startTime = moment().startOf("day").add(parking.activeHours.start, "minutes").format(TIME_FORMAT);
+      const endTime = moment().startOf("day").add(parking.activeHours.end, "minutes").format(TIME_FORMAT);
+      const parkingJSON = parking.toJSON();
+      return { ...parkingJSON, activeHours: { start: startTime, end: endTime } };
+    });
+    res.json({ status: "SUCCESS", parkings: parkingsRes });
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });
   }
@@ -102,8 +108,12 @@ router.get("/myParking/:spotID", async (req, res) => {
   try {
     const { spotID } = req.params;
     const { userID } = req.user;
-    const parking = await ParkingLocations.findOne({ slotID: spotID, userID });
+    let parking = await ParkingLocations.findOne({ slotID: spotID, userID });
     if (parking) {
+      parking = parking.toJSON();
+
+      parking.activeHours.start = moment().startOf("day").add(parking.activeHours.start, "minutes").format(TIME_FORMAT);
+      parking.activeHours.end = moment().startOf("day").add(parking.activeHours.end, "minutes").format(TIME_FORMAT);
       res.json({ status: "SUCCESS", parking });
     } else {
       res.json({ status: "NOTFOUND", message: "Could not find the requested spot" });
