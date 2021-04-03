@@ -22,7 +22,9 @@ class Search extends StatelessWidget {
         body: (currentPosition != null)
             ? Consumer<List<Place>>(
                 builder: (_, places, __) {
-                  var markers = (places != null) ? markerService.getMarkers(places) : List<Marker>();
+                  var markers = (places != null)
+                      ? markerService.getMarkers(places)
+                      : List<Marker>();
                   return (places != null)
                       ? Column(
                           children: <Widget>[
@@ -42,51 +44,51 @@ class Search extends StatelessWidget {
                               height: 10.0,
                             ),
                             Expanded(
-                              child: (places.length > 0) ? ListView.builder(
-                                  itemCount: places.length,
-                                  itemBuilder: (context, index) {
-                                    return FutureProvider(
-                                      create: (context) =>
-                                          geoService.getDistance(
-                                              currentPosition.latitude,
-                                              currentPosition.longitude,
-                                              places[index].lat,
-                                              places[index].long,
-                                             ),
-                                      child: Card(
-                                        child: ListTile(
-                                          title: Text(places[index].address),
-                                          subtitle: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              SizedBox(
-                                                height: 3.0,
-                                              ),
-                                             
-                                              SizedBox(
-                                                height: 5.0,
-                                              ),
-                                             
-                                              
-                                            ],
+                              child: (places.length > 0)
+                                  ? ListView.builder(
+                                      itemCount: places.length,
+                                      itemBuilder: (context, index) {
+                                        return FutureProvider(
+                                          create: (context) =>
+                                              geoService.getDistance(
+                                            currentPosition.latitude,
+                                            currentPosition.longitude,
+                                            places[index].lat,
+                                            places[index].long,
                                           ),
-                                          trailing: IconButton(
-                                            icon: Icon(Icons.directions),
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            onPressed: () {
-                                              _launchMapsUrl(
-                                                  places[index]
-                                                      .lat,
-                                                  places[index]
-                                                      .long);
-                                            },
+                                          child: Card(
+                                            child: ListTile(
+                                              title:
+                                                  Text(places[index].address),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 3.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                ],
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(Icons.directions),
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                onPressed: () {
+                                                  _launchMapsUrl(
+                                                      places[index].lat,
+                                                      places[index].long);
+                                                },
+                                              ),
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  }) : Center(child:Text('No Parking Found Nearby'),),
+                                        );
+                                      })
+                                  : Center(
+                                      child: Text('No Parking Found Nearby'),
+                                    ),
                             )
                           ],
                         )

@@ -47,11 +47,11 @@ class MyApp extends StatelessWidget {
           // home: SignUpSection(),
           initialRoute: '/',
           routes: {
-            '/': (context) =>Search(),
+            '/': (context) => Search(),
 
             // '/': (context) => AuthScreen(),
             '/auth': (context) => HomePage(),
-            '/search':(context)=>Search(),
+            '/search': (context) => Search(),
           },
         ));
   }
