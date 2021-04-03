@@ -7,6 +7,7 @@ const headingColor = Color(0xFF002140);
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    
     return Drawer(
       child: Container(
         color: kSubMainColor,
@@ -35,7 +36,7 @@ class NavDrawer extends StatelessWidget {
             ),
           ListTile(
             title: Text('Add Spot'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/add_spot')},
+            onTap: () => {Navigator.of(context).pushNamed('/add_spot')},
           ),
         
            Divider(color: kMainColor),

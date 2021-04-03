@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:parking_locator/screens/placeDetails.dart';
 import 'package:parking_locator/services/geolocator_service.dart';
 import 'package:parking_locator/services/marker_service.dart';
 import 'package:parking_locator/widgets/drawer.dart';
@@ -21,8 +22,10 @@ class Search extends StatelessWidget {
     return FutureProvider(
       create: (context) => placesProvider,
       child: Scaffold(
-        appBar:AppBar(title: Text("Cark Park"),),
-        drawer:NavDrawer() ,
+        appBar: AppBar(
+          title: Text("Cark Park"),
+        ),
+        drawer: NavDrawer(),
         body: (currentPosition != null)
             ? Consumer<List<Place>>(
                 builder: (_, places, __) {
@@ -60,31 +63,44 @@ class Search extends StatelessWidget {
                                             places[index].lat,
                                             places[index].long,
                                           ),
-                                          child: Card(
-                                            child: ListTile(
-                                              title:
-                                                  Text(places[index].address),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 3.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              trailing: IconButton(
-                                                icon: Icon(Icons.directions),
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                onPressed: () {
-                                                  _launchMapsUrl(
-                                                      places[index].lat,
-                                                      places[index].long);
-                                                },
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PlaceDetails(
+                                                      spotId:
+                                                          places[index].slotID,
+                                                    ),
+                                                  ));
+                                            },
+                                            child: Card(
+                                              child: ListTile(
+                                                title:
+                                                    Text(places[index].address),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    SizedBox(
+                                                      height: 3.0,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                trailing: IconButton(
+                                                  icon: Icon(Icons.directions),
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  onPressed: () {
+                                                    _launchMapsUrl(
+                                                        places[index].lat,
+                                                        places[index].long);
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
