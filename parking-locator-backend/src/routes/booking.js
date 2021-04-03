@@ -2,6 +2,7 @@ const express = require("express");
 const ParkingLocations = require("../database/models/parkingLocations");
 const ParkingHistory = require("../database/models/ParkingHistory");
 const moment = require("moment");
+const getDistanceFromLatLonInKm = require("../helpers/mapDistance");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -11,18 +12,24 @@ router.get("/", async (req, res) => {
 router.post("/checkin", async (req, res) => {
   console.log(req.body);
   const { userID } = req.user;
-  const { spotID, isEmpty } = req.body;
+  const { spotID, lat, long } = req.body;
 
   const imageIfFull = "http://www.theshadestudio.co.in/wp-content/uploads/photo-gallery/thumb/DSC03643.jpg";
   try {
     const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
     if (parkingSpot) {
       if (parkingSpot.isEmpty) {
-        if (isEmpty === "false") {
-          const parkingHistory = await ParkingHistory.create({ userID, slotID: spotID });
-          res.json({ STATUS: "SUCCESS", carImage: imageIfFull, bookingID: parkingHistory._id });
+        const parkingLocation = parkingSpot.Location.coordinates;
+        const distance = getDistanceFromLatLonInKm(parkingLocation[0], parkingLocation[1], lat, long);
+        if (distance < 100) {
+          if (isEmpty === "false") {
+            const parkingHistory = await ParkingHistory.create({ userID, slotID: spotID });
+            res.json({ STATUS: "SUCCESS", carImage: imageIfFull, bookingID: parkingHistory._id });
+          } else {
+            res.json({ status: "FAILED", message: "NO car is present in the slot" });
+          }
         } else {
-          res.json({ status: "FAILED", message: "NO car is present in the slot" });
+          res.json({ status: "FAILED", message: "You are too far away from the parking" });
         }
       } else {
         res.json({ STATUS: "FAILED", message: "Slot is not empty" });
