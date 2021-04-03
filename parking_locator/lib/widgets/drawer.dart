@@ -34,6 +34,12 @@ class NavDrawer extends StatelessWidget {
                 ),
               ),
             ),
+            ListTile(
+            title: Text('Home'),
+            onTap: () => {Navigator.of(context).pushNamed('/search')},
+          ),
+        
+           Divider(color: kMainColor),
           ListTile(
             title: Text('Add Spot'),
             onTap: () => {Navigator.of(context).pushNamed('/add_spot')},
@@ -42,7 +48,7 @@ class NavDrawer extends StatelessWidget {
            Divider(color: kMainColor),
           ListTile(
             title: Text('My Parking slots'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/my_parking')},
+            onTap: () => {Navigator.of(context).pushNamed('/my_parking')},
           ),
           Divider(color: kMainColor),
           

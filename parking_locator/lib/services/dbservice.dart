@@ -4,7 +4,7 @@ import 'dart:convert' as convert;
 import 'dart:convert';
 
 import 'package:parking_locator/models/place.dart';
-import 'package:parking_locator/models/placeDetails.dart';
+
 
 class DbMethods {
   addSpot(lat, long, startTime, endTime, address, type) async {
@@ -18,7 +18,7 @@ class DbMethods {
     print(url);
     var res = await http.post(
       url,
-      body: json.encode({
+      body: convert.json.encode({
         "lat": lat,
         "long": long,
         "startTime": startTime,
@@ -57,5 +57,95 @@ class DbMethods {
     var jsonResults = convert.jsonDecode(response.body);
     print(jsonResults['parking']);
     return jsonResults['parking'];
+  }
+}
+
+class DbBookingMethods {
+  onSubmit(spotid, lat, long,canBook) async {
+    print("imhere");
+
+    String token =
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
+    // try {
+    var url = Uri.parse('http://127.0.0.1:5000/booking/checkin');
+    print(url);
+    var res = await http.post(
+      url,
+      body: convert.json.encode({
+        "spotID": spotid,
+        "lat": lat,
+        "long": long,
+        "isEmpty": canBook,
+      }),
+      headers: {
+        "authorization": token,
+        "Content-Type": "application/json",
+      },
+    );
+
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      print("Spot added");
+      var status = res.body;
+      var json = convert.jsonDecode(res.body);
+      print(json);
+      return json;
+    } else {
+      throw Exception('Failed to see booking.');
+    }
+  }
+
+  confirmBook(spotid, bookingid) async {
+    print("imhere");
+    print(spotid);
+    print(bookingid);
+
+    String token =
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
+    // try {
+    var url = Uri.parse('http://127.0.0.1:5000/booking/checkin/verify');
+    print(url);
+    var res = await http.post(
+      url,
+      body: convert.json.encode({"spotID": spotid, "bookingID": bookingid}),
+      headers: {
+        "authorization": token,
+        "Content-Type": "application/json",
+      },
+    );
+
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      print("Confirm booking");
+    } else {
+      throw Exception('Failed confirm booking.');
+    }
+  }
+
+  checkout(spotid) async {
+    print("imhere");
+
+    String token =
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
+    // try {
+    var url = Uri.parse('http://127.0.0.1:5000/booking/checkin/checkout');
+    print(url);
+    var res = await http.post(
+      url,
+      body: convert.json.encode({"spotID": spotid}),
+      headers: {
+        "authorization": token,
+        "Content-Type": "application/json",
+      },
+    );
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      print("Checkout!!");
+    } else {
+      throw Exception('Failed confirm booking.');
+    }
   }
 }

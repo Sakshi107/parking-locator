@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:parking_locator/screens/placeDetails.dart';
 import 'package:parking_locator/services/geolocator_service.dart';
+import 'package:parking_locator/services/dbservice.dart';
+import 'package:parking_locator/screens/confirm_booking.dart';
 import 'package:parking_locator/services/marker_service.dart';
 import 'package:parking_locator/widgets/drawer.dart';
+
+
 
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -36,7 +39,7 @@ class Search extends StatelessWidget {
                       ? Column(
                           children: <Widget>[
                             Container(
-                              height: MediaQuery.of(context).size.height / 1.5,
+                              height: MediaQuery.of(context).size.height / 2,
                               width: MediaQuery.of(context).size.width,
                               child: GoogleMap(
                                 initialCameraPosition: CameraPosition(
@@ -56,6 +59,7 @@ class Search extends StatelessWidget {
                                       itemCount: places.length,
                                       itemBuilder: (context, index) {
                                         return FutureProvider(
+                                          initialData: Container(),
                                           create: (context) =>
                                               geoService.getDistance(
                                             currentPosition.latitude,
