@@ -34,6 +34,11 @@ dependencies:
   url_launcher: ^6.0.3
   http: ^0.13.1
   flutter_rating_bar: ^4.0.0
+  google_fonts: ^2.0.0
+  loading_animations: ^2.2.0
+  lottie: ^1.0.1
+
+
 
 
 dev_dependencies:
