@@ -6,6 +6,7 @@ import 'package:parking_locator/models/place.dart';
 import 'package:parking_locator/screens/authentication/auth2.dart';
 import 'package:parking_locator/screens/addSpot.dart';
 import 'package:parking_locator/screens/mySpots.dart';
+import 'package:parking_locator/screens/placeDetails.dart';
 
 import 'package:parking_locator/screens/search.dart';
 
@@ -56,7 +57,8 @@ class MyApp extends StatelessWidget {
             '/auth': (context) => HomePage(),
             '/search': (context) => Search(),
             '/add_spot': (context) => AddSpot(),
-            '/my_spots': (context) => MySpots()
+            '/my_spots': (context) => MySpots(),
+            '/place_details': (context) => PlaceDetails(),
           },
         ));
   }

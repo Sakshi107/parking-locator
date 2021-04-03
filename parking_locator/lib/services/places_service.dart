@@ -27,15 +27,15 @@ class PlacesService {
     var json = convert.jsonDecode(response.body);
     // print(json);
     var jsonResults = json['parkings'];
-    print("im here");
+    // print("im here");
     print(jsonResults);
-    for (int i = 0; i < jsonResults.length; i++) {
-      print(i);
-      print(jsonResults[i]);
-      print(jsonResults[i]['Location']['coordinates'][0]);
-      print(jsonResults[i]['activeHours']);
-    }
-    print(jsonResults.map((place) => Place.fromJson(place, icon)).toList());
+    // for (int i = 0; i < jsonResults.length; i++) {
+    //   print(i);
+    //   print(jsonResults[i]);
+    //   print(jsonResults[i]['Location']['coordinates'][0]);
+    //   print(jsonResults[i]['activeHours']);
+    // }
+    // print(jsonResults.map((place) => Place.fromJson(place,icon)).toList());
     return jsonResults
         .map<Place>((place) => Place.fromJson(place, icon))
         .toList();
