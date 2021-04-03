@@ -8,11 +8,12 @@ class MarkerService {
 
     places.forEach((place){
       Marker marker = Marker( 
-        markerId: MarkerId(place.name),
+        markerId: MarkerId(place.address),
         draggable: false,
         icon: place.icon,
-        infoWindow: InfoWindow(title: place.name, snippet: place.vicinity),
-        position: LatLng(place.geometry.location.lat, place.geometry.location.lng)
+        // icon:BitmapDescriptor.defaultMarker,
+        infoWindow: InfoWindow(title: place.address),
+        position: LatLng(place.lat, place.long)
       );
 
       markers.add(marker);

@@ -1,11 +1,12 @@
 import 'package:http/http.dart' as http;
 import 'dart:io';
 import 'dart:convert';
+import 'package:parking_locator/screens/token.dart';
 
 class AuthMethods {
-  signup(name,email,phone, password) async {
+  signup(name, email, phone, password) async {
     print("imhere");
-   // try {
+    // try {
     var url = Uri.parse('http://127.0.0.1:5000/auth/signup');
     print(url);
     //  var request = await httpClient.post('192.168.0.108', 3000, "/auth/signup");
@@ -24,6 +25,9 @@ class AuthMethods {
     );
 
     print(res.statusCode);
+    var jsonresult = jsonDecode(res.body);
+    print(jsonresult['token']);
+    // _token=
     print(res.body);
     if (res.statusCode == 200) {
       print("signed up");
@@ -31,26 +35,27 @@ class AuthMethods {
       throw Exception('Failed to create album.');
     }
   }
-    signin(email, password) async {
+
+  signin(email, password) async {
     print("imhere");
-   // try {
+    // try {
     var url = Uri.parse('http://127.0.0.1:5000/auth/login');
     print(url);
     //  var request = await httpClient.post('192.168.0.108', 3000, "/auth/signup");
 //  var res = await request.close();
     var res = await http.post(
       url,
-      body: json.encode({
-        "email": email,
-        "password": password
-      }),
+      body: json.encode({"email": email, "password": password}),
       headers: {
         "Content-Type": "application/json",
       },
     );
 
     print(res.statusCode);
-    print(res.body);
+    // print(res.body);
+    var jsonresult = jsonDecode(res.body);
+    print(jsonresult['token']);
+    // _token = jsonresult['token'];
     if (res.statusCode == 200) {
       print("signed in");
     } else {

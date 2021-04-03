@@ -62,7 +62,7 @@ class _LoginState extends State<Login> {
         _loginFormLoading = false;
       });
     } else {
-      Navigator.pushReplacementNamed(context, '/search');
+     Navigator.pop(context);
     }
   }
 
