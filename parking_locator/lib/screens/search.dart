@@ -50,17 +50,12 @@ class Search extends StatelessWidget {
                                           geoService.getDistance(
                                               currentPosition.latitude,
                                               currentPosition.longitude,
-                                              places[index]
-                                                  .geometry
-                                                  .location
-                                                  .lat,
-                                              places[index]
-                                                  .geometry
-                                                  .location
-                                                  .lng),
+                                              places[index].lat,
+                                              places[index].long,
+                                             ),
                                       child: Card(
                                         child: ListTile(
-                                          title: Text(places[index].name),
+                                          title: Text(places[index].address),
                                           subtitle: Column(
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
@@ -68,37 +63,12 @@ class Search extends StatelessWidget {
                                               SizedBox(
                                                 height: 3.0,
                                               ),
-                                              (places[index].rating != null)
-                                                  ? Row(
-                                                      children: <Widget>[
-                                                        RatingBarIndicator(
-                                                          rating: places[index]
-                                                              .rating,
-                                                          itemBuilder: (context,
-                                                                  index) =>
-                                                              Icon(Icons.star,
-                                                                  color: Colors
-                                                                      .amber),
-                                                          itemCount: 5,
-                                                          itemSize: 10.0,
-                                                          direction:
-                                                              Axis.horizontal,
-                                                        )
-                                                      ],
-                                                    )
-                                                  : Row(),
+                                             
                                               SizedBox(
                                                 height: 5.0,
                                               ),
-                                              Consumer<double>(
-                                                builder:
-                                                    (context, meters, wiget) {
-                                                  return (meters != null)
-                                                      ? Text(
-                                                          '${places[index].vicinity} \u00b7 ${(meters / 1609).round()} mi')
-                                                      : Container();
-                                                },
-                                              )
+                                             
+                                              
                                             ],
                                           ),
                                           trailing: IconButton(
@@ -108,13 +78,9 @@ class Search extends StatelessWidget {
                                             onPressed: () {
                                               _launchMapsUrl(
                                                   places[index]
-                                                      .geometry
-                                                      .location
                                                       .lat,
                                                   places[index]
-                                                      .geometry
-                                                      .location
-                                                      .lng);
+                                                      .long);
                                             },
                                           ),
                                         ),

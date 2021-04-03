@@ -23,7 +23,7 @@ router.get("/nearme", async (req, res) => {
         ],
         isEmpty: true,
       },
-      { slotID: 1, "Location.coordinates": 1 }
+      { slotID: 1, "Location.coordinates": 1 ,"address":1,"activeHours":1}
     );
     res.json({ status: "SUCCESS", parkings: parkingsNearMe });
   } catch (error) {

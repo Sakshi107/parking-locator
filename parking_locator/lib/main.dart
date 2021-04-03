@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
             ImageConfiguration configuration =
                 createLocalImageConfiguration(context);
             return BitmapDescriptor.fromAssetImage(
-                configuration, 'assets/images/parking-icon.png');
+                configuration, 'assets/parking-icon.png');
           }),
           ProxyProvider2<Position, BitmapDescriptor, Future<List<Place>>>(
             update: (context, position, icon, places) {
@@ -47,7 +47,9 @@ class MyApp extends StatelessWidget {
           // home: SignUpSection(),
           initialRoute: '/',
           routes: {
-            '/': (context) => AuthScreen(),
+            '/': (context) =>Search(),
+
+            // '/': (context) => AuthScreen(),
             '/auth': (context) => HomePage(),
             '/search':(context)=>Search(),
           },
