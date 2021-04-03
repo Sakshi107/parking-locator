@@ -166,6 +166,41 @@ class DbBookingMethods {
     }
   }
 
+   PriorBook(spotid, startTime,duration) async {
+    print("imhere");
+
+    String token =
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
+    // try {
+    var url = Uri.parse('http://127.0.0.1:5000/booking/checkin');
+    print(url);
+    var res = await http.post(
+      url,
+      body: convert.json.encode({
+        "spotID": spotid,
+        "startTime": startTime,
+        "duration":duration,
+      }),
+      headers: {
+        "authorization": token,
+        "Content-Type": "application/json",
+      },
+    );
+
+    print(res.statusCode);
+    print(res.body);
+    if (res.statusCode == 200) {
+      print("Spot added");
+      var status = res.body;
+      var json = convert.jsonDecode(res.body);
+      print(json);
+      return json;
+    } else {
+      throw Exception('Failed to see booking.');
+    }
+  }
+
+
   confirmBook(spotid, bookingid) async {
     print("imhere");
     print(spotid);
