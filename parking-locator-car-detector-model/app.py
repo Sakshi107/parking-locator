@@ -7,13 +7,14 @@ import numpy as np
 import requests
 import cv2
 import numpy as np
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from json import JSONEncoder
 
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 app = Flask(__name__)
 CORS(app)
 PORT = 4000
+app.config["ENV"] = "development"
 
 
 class NumpyArrayEncoder(JSONEncoder):
@@ -25,9 +26,9 @@ class NumpyArrayEncoder(JSONEncoder):
 # Testing URL
 
 
-@app.route('/hello/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def hello_world():
-    return 'Hello, World!'
+    return render_template("index.html")
 
 
 target = os.path.join(APP_ROOT, 'images/')
@@ -39,9 +40,9 @@ def image_classifier():
     if not os.path.isdir(target):
         os.mkdir(target)
 
-    # print(request.files)
+    print(request.files)
     data_for_pred = []
-    for upload in request.files.getlist("files"):
+    for upload in request.files.getlist("files[]"):
         filename = upload.filename
         destination = "/".join([target, filename])
         upload.save(destination)
@@ -59,15 +60,15 @@ def image_classifier():
 
     preds = json.loads(r.text)['predictions']
     response = []
-    files = request.files.getlist("files")
+    files = request.files.getlist("files[]")
     i = 0
     for pred in preds:
         filename = files[i].filename
         response.append(
-            {"filename": filename, "isCar": pred[0] > 0.6, "confidence": "{:.3f}".format(float(pred[0]))})
+            {"filename": filename, "isCar": pred[0] > 0.4, "confidence": "{:.3f}".format(float(pred[0]))})
         i += 1
     return jsonify(response)
 
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=PORT)
+if __name__ == "__main__":
+    app.run('0.0.0.0', port=PORT)
