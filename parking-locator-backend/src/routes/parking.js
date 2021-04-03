@@ -1,6 +1,7 @@
 const express = require("express");
 const ParkingLocations = require("../database/models/parkingLocations");
 const moment = require("moment");
+const { TIME_FORMAT } = require("../config");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -22,7 +23,7 @@ router.get("/nearme", async (req, res) => {
         ],
         isEmpty: true,
       },
-      { slotID: 1 }
+      { slotID: 1, "Location.coordinates": 1 ,"address":1,"activeHours":1}
     );
     res.json({ status: "SUCCESS", parkings: parkingsNearMe });
   } catch (error) {
@@ -33,8 +34,12 @@ router.get("/nearme", async (req, res) => {
 router.get("/:spotID", async (req, res) => {
   try {
     const { spotID } = req.params;
-    const parking = await ParkingLocations.findOne({ slotID: spotID });
+    let parking = await ParkingLocations.findOne({ slotID: spotID });
     if (parking) {
+      parking = parking.toJSON();
+      parking.activeHours.start = moment().startOf("day").add(parking.activeHours.start, "minutes").format(TIME_FORMAT);
+      parking.activeHours.end = moment().startOf("day").add(parking.activeHours.end, "minutes").format(TIME_FORMAT);
+      console.log(parking.activeHours);
       res.json({ status: "SUCCESS", parking });
     } else {
       res.json({ status: "NOTFOUND", message: "Could not find the requested spot" });

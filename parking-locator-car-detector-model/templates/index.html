@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/index.css" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
+
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">CAR DETECTOR</div>
+      <div class="fileDisplayCont">
+        <div class="fileDisplay">
+          <input type="file" name="files" id="uploader" accept="image/*" hidden />
+          <img src="" />
+          <video id="camera"></video>
+        </div>
+      </div>
+      <div class="iscar"><h1></h1></div>
+
+      <canvas id="capture" width="320" height="240" hidden></canvas>
+      <div hidden id="snapshot"></div>
+    </div>
+    <script src="/static/js/index.js"></script>
+  </body>
+</html>

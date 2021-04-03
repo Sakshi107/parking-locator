@@ -7,7 +7,6 @@ import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../models/place.dart';
-import 'package:parking_locator/screens/addSpot.dart';
 
 class Search extends StatelessWidget {
   @override
@@ -20,140 +19,86 @@ class Search extends StatelessWidget {
     return FutureProvider(
       create: (context) => placesProvider,
       child: Scaffold(
-          body: (currentPosition != null)
-              ? Consumer<List<Place>>(
-                  builder: (_, places, __) {
-                    var markers = (places != null)
-                        ? markerService.getMarkers(places)
-                        : List<Marker>();
-                    return (places != null)
-                        ? Column(
-                            children: <Widget>[
-                              Container(
-                                height:
-                                    MediaQuery.of(context).size.height / 1.5,
-                                width: MediaQuery.of(context).size.width,
-                                child: GoogleMap(
-                                  initialCameraPosition: CameraPosition(
-                                      target: LatLng(currentPosition.latitude,
-                                          currentPosition.longitude),
-                                      zoom: 16.0),
-                                  zoomGesturesEnabled: true,
-                                  markers: Set<Marker>.of(markers),
-                                ),
+        body: (currentPosition != null)
+            ? Consumer<List<Place>>(
+                builder: (_, places, __) {
+                  var markers = (places != null)
+                      ? markerService.getMarkers(places)
+                      : List<Marker>();
+                  return (places != null)
+                      ? Column(
+                          children: <Widget>[
+                            Container(
+                              height: MediaQuery.of(context).size.height / 1.5,
+                              width: MediaQuery.of(context).size.width,
+                              child: GoogleMap(
+                                initialCameraPosition: CameraPosition(
+                                    target: LatLng(currentPosition.latitude,
+                                        currentPosition.longitude),
+                                    zoom: 16.0),
+                                zoomGesturesEnabled: true,
+                                markers: Set<Marker>.of(markers),
                               ),
-                              SizedBox(
-                                height: 10.0,
-                              ),
-                              Expanded(
-                                child: (places.length > 0)
-                                    ? ListView.builder(
-                                        itemCount: places.length,
-                                        itemBuilder: (context, index) {
-                                          return FutureProvider(
-                                            create: (context) =>
-                                                geoService.getDistance(
-                                                    currentPosition.latitude,
-                                                    currentPosition.longitude,
-                                                    places[index]
-                                                        .geometry
-                                                        .location
-                                                        .lat,
-                                                    places[index]
-                                                        .geometry
-                                                        .location
-                                                        .lng),
-                                            child: Card(
-                                              child: ListTile(
-                                                title: Text(places[index].name),
-                                                subtitle: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    SizedBox(
-                                                      height: 3.0,
-                                                    ),
-                                                    (places[index].rating !=
-                                                            null)
-                                                        ? Row(
-                                                            children: <Widget>[
-                                                              RatingBarIndicator(
-                                                                rating: places[
-                                                                        index]
-                                                                    .rating,
-                                                                itemBuilder: (context,
-                                                                        index) =>
-                                                                    Icon(
-                                                                        Icons
-                                                                            .star,
-                                                                        color: Colors
-                                                                            .amber),
-                                                                itemCount: 5,
-                                                                itemSize: 10.0,
-                                                                direction: Axis
-                                                                    .horizontal,
-                                                              )
-                                                            ],
-                                                          )
-                                                        : Row(),
-                                                    SizedBox(
-                                                      height: 5.0,
-                                                    ),
-                                                    Consumer<double>(
-                                                      builder: (context, meters,
-                                                          wiget) {
-                                                        return (meters != null)
-                                                            ? Text(
-                                                                '${places[index].vicinity} \u00b7 ${(meters / 1609).round()} mi')
-                                                            : Container();
-                                                      },
-                                                    )
-                                                  ],
-                                                ),
-                                                trailing: IconButton(
-                                                  icon: Icon(Icons.directions),
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                  onPressed: () {
-                                                    _launchMapsUrl(
-                                                        places[index]
-                                                            .geometry
-                                                            .location
-                                                            .lat,
-                                                        places[index]
-                                                            .geometry
-                                                            .location
-                                                            .lng);
-                                                  },
-                                                ),
+                            ),
+                            SizedBox(
+                              height: 10.0,
+                            ),
+                            Expanded(
+                              child: (places.length > 0)
+                                  ? ListView.builder(
+                                      itemCount: places.length,
+                                      itemBuilder: (context, index) {
+                                        return FutureProvider(
+                                          create: (context) =>
+                                              geoService.getDistance(
+                                            currentPosition.latitude,
+                                            currentPosition.longitude,
+                                            places[index].lat,
+                                            places[index].long,
+                                          ),
+                                          child: Card(
+                                            child: ListTile(
+                                              title:
+                                                  Text(places[index].address),
+                                              subtitle: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 3.0,
+                                                  ),
+                                                  SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                ],
+                                              ),
+                                              trailing: IconButton(
+                                                icon: Icon(Icons.directions),
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                onPressed: () {
+                                                  _launchMapsUrl(
+                                                      places[index].lat,
+                                                      places[index].long);
+                                                },
                                               ),
                                             ),
-                                          );
-                                        })
-                                    : Center(
-                                        child: Text('No Parking Found Nearby'),
-                                      ),
-                              ),
-                            ],
-                          )
-                        : Center(child: CircularProgressIndicator());
-                  },
-                )
-              : Center(
-                  child: CircularProgressIndicator(),
-                ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-          floatingActionButton: FloatingActionButton(
-            child: Icon(Icons.add),
-            backgroundColor: Colors.green,
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => AddSpot(),
-                  ));
-            },
-          )),
+                                          ),
+                                        );
+                                      })
+                                  : Center(
+                                      child: Text('No Parking Found Nearby'),
+                                    ),
+                            )
+                          ],
+                        )
+                      : Center(child: CircularProgressIndicator());
+                },
+              )
+            : Center(
+                child: CircularProgressIndicator(),
+              ),
+      ),
     );
   }
 

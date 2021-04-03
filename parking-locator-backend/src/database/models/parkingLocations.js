@@ -11,6 +11,12 @@ const ParkingLocationsSchema = mongoose.Schema({
     },
     coordinates: [Number],
   },
+  parkingType: {
+    type: String,
+    enum: ["COVERED", "OPEN"],
+  },
+  chargesPerHour: { type: Number },
+  address: String,
   slotID: { type: String, default: UUID },
   isEmpty: { type: Boolean, default: true },
   activeHours: { start: { type: Number, default: 0 }, end: { type: Number, default: 1440 } },

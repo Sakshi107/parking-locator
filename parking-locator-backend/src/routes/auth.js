@@ -10,10 +10,12 @@ router.get("/", (req, res) => {
 router.post("/signup", async (req, res) => {
   try {
     const user = await User.create({ ...req.body });
+    console.log(user.toJSON());
     const { password, ...profile } = user.toJSON();
     const token = `bearer ` + generateJWTToken(profile);
     res.json({ status: "SUCCESS", authToken: token, profile });
   } catch (error) {
+    console.log(error.message);
     res.status(500).send({ message: error.message, errorType: error.name });
   }
 });
