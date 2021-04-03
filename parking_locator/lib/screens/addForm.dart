@@ -42,6 +42,7 @@ class _AddFormState extends State<AddForm> {
   TimeOfDay selectedToTime = TimeOfDay(hour: 00, minute: 00);
   // String address;
   double lat, long;
+  int cost;
   TimeOfDay startTime, endTime;
   String _selectedType, parkingtype, address;
   List<String> _typeList = ['Open', 'Covered'];
@@ -178,7 +179,8 @@ class _AddFormState extends State<AddForm> {
     var end = formatTimeOfDay(endTime).toString();
     print("end" + end);
 //         toTime: formatTimeOfDay(selectedToTime).toString(),
-    return await _addSpot.addSpot(_lat, _long, start, end, address, parkingtype, 1000)
+    return await _addSpot.addSpot(
+            _lat, _long, start, end, address, parkingtype, cost)
         // .then((obj) => return "Added parking spot";
         // .catchError((error) => return "Failed to add the parking spot: $error";
         ;
@@ -205,20 +207,21 @@ class _AddFormState extends State<AddForm> {
     print(endTime);
     print(parkingtype);
     print(address);
-    var obj = await add();
-    print("imhereee");
-    print(obj);
-    if (obj["status"] == "SUCCESS") {
-      _alertDialogBuilder("Your parking spot has been added");
+    print(cost);
+    // var obj = await add();
+    // print("imhereee");
+    // print(obj);
+    // if (obj["status"] == "SUCCESS") {
+    //   _alertDialogBuilder("Your parking spot has been added");
 
-      setState(() {
-        _formLoading = false;
-      });
-      //Navigator.pop(context);
-    } else {
-      _alertDialogBuilder("Unable to add your parking spot");
-      Navigator.pop(context);
-    }
+    //   setState(() {
+    //     _formLoading = false;
+    //   });
+    //   //Navigator.pop(context);
+    // } else {
+    //   _alertDialogBuilder("Unable to add your parking spot");
+    //   Navigator.pop(context);
+    // }
   }
 
   double _lat = 0;
@@ -399,12 +402,11 @@ class _AddFormState extends State<AddForm> {
                   ),
                 ],
               ),
-              // CustomFormField(
-              //     labelText: "Charge per hour" + '\u{20B9}',
-              //     // validatorStr: "the text",
-              //     //prefixicon: Icons.search,
-              //     onChanged: (val) => cost = int.parse(val))
-              // ,
+              CustomFormField(
+                  labelText: "Charge per hour " + '\u{20B9}',
+                  validatorStr: "the text",
+                  prefixicon: Icons.attach_money_outlined,
+                  onChanged: (val) => cost = int.parse(val)),
               Center(
                   child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
@@ -435,26 +437,31 @@ class _AddFormState extends State<AddForm> {
 class CustomFormField extends StatelessWidget {
   final Function onChanged;
   final String labelText;
+  final String validatorStr;
   final IconData prefixicon;
-  final String text;
 
   CustomFormField({
     @required this.onChanged,
     @required this.labelText,
-    @required this.text,
+    @required this.validatorStr,
     @required this.prefixicon,
-  });
-   //assert(onChanged != null),
-   //assert(validatorStr != null);
+  })  : assert(labelText != null),
+        // assert(onChanged != null),
+        assert(validatorStr != null);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: TextField(
-        enabled: false,
+      child: TextFormField(
+        validator: (value) {
+          if (value.length == 0) {
+            return (validatorStr);
+          }
+          return null;
+        },
+        onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: text,
           prefixIcon: Icon(
             prefixicon,
             color: kMainColor,
