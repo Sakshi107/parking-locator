@@ -128,6 +128,9 @@ class _SignUpState extends State<SignUp> {
           type:TextInputType.phone,
           isPassword: false,
         ),
+        SizedBox(
+          height: 16,
+        ),
         Input(str:"Password",
          onChanged: (value) {
             _registerPassword = value;

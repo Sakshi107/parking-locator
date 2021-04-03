@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 class Constants{
   static const mainColor=Color(0xFFAFEADC);
   static const secColor=Color(0xFF041E42);
-  static const backgroundColor=Color(0xFFAFEADC);
+  //static const backgroundColor=Color(0xFFAFEADC);
 
   static const tileSelected=TextStyle(color:Colors.white70,fontSize:20,fontWeight:FontWeight.w600 );
 

@@ -5,6 +5,7 @@ import 'package:date_format/date_format.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:parking_locator/screens/addSpot.dart';
 import 'package:parking_locator/services/dbservice.dart';
+import 'package:parking_locator/constants.dart';
 
 const kMainColor = Color(0xFFFF785B);
 const kSubMainColor = Color(0xFFDEE8FF);

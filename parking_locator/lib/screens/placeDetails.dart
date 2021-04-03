@@ -5,6 +5,7 @@ import 'package:parking_locator/widgets/drawer.dart';
 import 'package:parking_locator/screens/confirm_booking.dart';
 import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
+import 'package:parking_locator/constants.dart';
 
 class PlaceDetails extends StatefulWidget {
   final String spotId;
@@ -109,7 +110,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
                             ),
-                            //primary: kMainColor
+                            //primary: Constants.secColor
                           ),
                           onPressed: () {
                             print(place['Location']);
@@ -143,7 +144,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
                             ),
-                            //primary: kMainColor
+                            //primary: Constants.secColor
                           ),
                           onPressed: () {
                             showDialog(
@@ -184,28 +185,28 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                                                         EdgeInsets.all(5),
                                                     prefixIcon: Icon(
                                                       Icons.alarm,
-                                                      color: kMainColor,
+                                                      color: Constants.secColor,
                                                     ),
                                                     enabledBorder:
                                                         const OutlineInputBorder(
                                                       borderSide:
                                                           const BorderSide(
-                                                              color: kMainColor,
+                                                              color: Constants.secColor,
                                                               width: 1.0),
                                                     ),
                                                     border: OutlineInputBorder(
                                                       // borderRadius: new BorderRadius.circular(20.0),
                                                       borderSide: BorderSide(
-                                                          color: kMainColor),
+                                                          color: Constants.secColor),
                                                     ),
                                                     focusedBorder:
                                                         new OutlineInputBorder(
                                                       // borderRadius: new BorderRadius.circular(20.0),
                                                       borderSide: BorderSide(
-                                                          color: kMainColor),
+                                                          color: Constants.secColor),
                                                     ),
                                                     labelStyle: new TextStyle(
-                                                        color: headingColor,
+                                                        color: Constants.secColor,
                                                         fontSize: 15),
                                                     labelText: "From time",
                                                   )),
@@ -345,22 +346,22 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                         contentPadding: EdgeInsets.all(5),
                         prefixIcon: Icon(
                           Icons.alarm,
-                          color: kMainColor,
+                          color: Constants.secColor,
                         ),
                         enabledBorder: const OutlineInputBorder(
                           borderSide:
-                              const BorderSide(color: kMainColor, width: 1.0),
+                              const BorderSide(color: Constants.secColor, width: 1.0),
                         ),
                         border: OutlineInputBorder(
                           // borderRadius: new BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: kMainColor),
+                          borderSide: BorderSide(color: Constants.secColor),
                         ),
                         focusedBorder: new OutlineInputBorder(
                           // borderRadius: new BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: kMainColor),
+                          borderSide: BorderSide(color: Constants.secColor),
                         ),
                         labelStyle:
-                            new TextStyle(color: headingColor, fontSize: 15),
+                            new TextStyle(color: Constants.secColor, fontSize: 15),
                         labelText: "From time",
                       )),
                 ),

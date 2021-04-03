@@ -6,6 +6,7 @@ import 'package:parking_locator/services/dbservice.dart';
 import 'package:parking_locator/screens/confirm_booking.dart';
 import 'package:parking_locator/services/marker_service.dart';
 import 'package:parking_locator/widgets/drawer.dart';
+import 'package:parking_locator/constants.dart';
 
 
 
@@ -26,6 +27,7 @@ class Search extends StatelessWidget {
       create: (context) => placesProvider,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Constants.secColor,
           title: Text("Cark Park"),
         ),
         drawer: NavDrawer(),
