@@ -3,6 +3,8 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:parking_locator/services/geolocator_service.dart';
 import 'package:parking_locator/services/marker_service.dart';
+import 'package:parking_locator/widgets/drawer.dart';
+
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -19,6 +21,8 @@ class Search extends StatelessWidget {
     return FutureProvider(
       create: (context) => placesProvider,
       child: Scaffold(
+        appBar:AppBar(title: Text("Cark Park"),),
+        drawer:NavDrawer() ,
         body: (currentPosition != null)
             ? Consumer<List<Place>>(
                 builder: (_, places, __) {

@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parking_locator/models/place.dart';
 
-import 'package:parking_locator/screens/authentication/auth.dart';
+// import 'package:parking_locator/screens/authentication/auth.dart';
 import 'package:parking_locator/screens/authentication/auth2.dart';
+import 'package:parking_locator/screens/addSpot.dart';
+
 import 'package:parking_locator/screens/search.dart';
 
 import 'package:parking_locator/services/geolocator_service.dart';
@@ -24,7 +26,7 @@ class MyApp extends StatelessWidget {
           FutureProvider(create: (context) => locatorService.getLocation()),
           FutureProvider(create: (context) {
             ImageConfiguration configuration =
-                createLocalImageConfiguration(context);
+                createLocalImageConfiguration(context, size: Size(100, 100));
             return BitmapDescriptor.fromAssetImage(
                 configuration, 'assets/parking-icon.png');
           }),
@@ -52,6 +54,7 @@ class MyApp extends StatelessWidget {
             // '/': (context) => AuthScreen(),
             '/auth': (context) => HomePage(),
             '/search': (context) => Search(),
+            '/add_spot':(context)=>AddSpot()
           },
         ));
   }

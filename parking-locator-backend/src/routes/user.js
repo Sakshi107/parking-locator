@@ -15,9 +15,11 @@ router.post("/myParking", async (req, res) => {
     const { lat, long, startTime, endTime, address, parkingType, chargesPerHour } = req.body;
     const { userID } = req.user;
     const startTimeObj = moment(startTime, TIME_FORMAT);
+    
     const endTimeObj = moment(endTime, TIME_FORMAT);
+    console.log(endTime);
     const startOfDay = moment().startOf("day");
-
+    console.log(address);
     const parking = await ParkingLocations.create({
       userID,
       Location: { type: "Point", coordinates: [lat, long] },
@@ -29,6 +31,7 @@ router.post("/myParking", async (req, res) => {
       parkingType,
       chargesPerHour,
     });
+    
     res.json({ status: "SUCCESS", parking });
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });

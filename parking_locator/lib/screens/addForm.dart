@@ -116,6 +116,14 @@ class _AddFormState extends State<AddForm> {
       });
   }
 
+  String formatTimeOfDay(TimeOfDay tod) {
+    final now = new DateTime.now();
+    final dt = DateTime(now.year, now.month, now.day, tod.hour, tod.minute);
+    final format = DateFormat('HH:mm:ss');
+    // print(format.format(dt));
+    return format.format(dt);
+  }
+
   bool validateForm() {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
@@ -164,17 +172,24 @@ class _AddFormState extends State<AddForm> {
   }
 
   Future<String> add() async {
+    print(startTime);
+    print(endTime);
+    var start = formatTimeOfDay(startTime).toString();
+    var end = formatTimeOfDay(endTime).toString();
+    print("end"+end);
+//         toTime: formatTimeOfDay(selectedToTime).toString(),
     await _addSpot
-        .addSpot(_lat, _long, _startTime, _endTime, _address, _type)
-        .then()
+        .addSpot(_lat, _long, start, end, address, parkingtype)
+        .then((obj) => print("Added parking spot"))
         .catchError((error) => print("Failed to add the parking spot: $error"));
     return "xyz";
   }
 
-  void _submit() {
+  void _submit() async {
     setState(() {
       _formLoading = true;
     });
+
     lat = widget.tappedpoint.latitude;
     long = widget.tappedpoint.longitude;
     startTime = selectedFromTime;
@@ -191,16 +206,16 @@ class _AddFormState extends State<AddForm> {
     print(endTime);
     print(parkingtype);
     print(address);
-    // String _addSpotFeedback = await add();
-    // if (_addSpotFeedback != null) {
-    //   _alertDialogBuilder(_addSpotFeedback);
+    String _addSpotFeedback = await add();
+    if (_addSpotFeedback != null) {
+      _alertDialogBuilder(_addSpotFeedback);
 
-    //   setState(() {
-    //     _formLoading = false;
-    //   });
-    // } else {
-    //   Navigator.pop(context);
-    // }
+      setState(() {
+        _formLoading = false;
+      });
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   double _lat = 0;
