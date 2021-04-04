@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:parking_locator/screens/placeDetails.dart';
 import 'package:parking_locator/services/geolocator_service.dart';
-import 'package:parking_locator/services/dbservice.dart';
-import 'package:parking_locator/screens/confirm_booking.dart';
+// import 'package:parking_locator/services/dbservice.dart';
+// import 'package:parking_locator/screens/confirm_booking.dart';
 import 'package:parking_locator/services/marker_service.dart';
 import 'package:parking_locator/widgets/drawer.dart';
 import 'package:parking_locator/constants.dart';
@@ -28,7 +28,7 @@ class Search extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.secColor,
-          title: Text("Cark Park"),
+          title: Text("ParkMe"),
         ),
         drawer: NavDrawer(),
         body: (currentPosition != null)
@@ -56,6 +56,8 @@ class Search extends StatelessWidget {
                               height: 10.0,
                             ),
                             Expanded(
+                              child:Container(
+                                 color: Constants.mainColor,
                               child: (places.length > 0)
                                   ? ListView.builder(
                                       itemCount: places.length,
@@ -82,9 +84,10 @@ class Search extends StatelessWidget {
                                                   ));
                                             },
                                             child: Card(
+                                             
                                               child: ListTile(
                                                 title:
-                                                    Text(places[index].address),
+                                                    Text(places[index].address,style: TextStyle(color:Constants.secColor),),
                                                 subtitle: Column(
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
@@ -115,6 +118,7 @@ class Search extends StatelessWidget {
                                   : Center(
                                       child: Text('No Parking Found Nearby'),
                                     ),
+                            )
                             )
                           ],
                         )

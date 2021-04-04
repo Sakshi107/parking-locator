@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 // import 'package:google_fonts/google_fonts.dart';
 
 class Constants{
-  static const mainColor=Color(0xFFAFEADC);
-  static const secColor=Color(0xFF041E42);
+  // static const mainColor=Color(0xFFAFEADC);
+  // static const secColor=Color(0xFF041E42);
   //static const backgroundColor=Color(0xFFAFEADC);
-
+  static const mainColor=Color(0xFFC7D3D4);
+  static const secColor=Color(0xFF603F83);
   static const tileSelected=TextStyle(color:Colors.white70,fontSize:20,fontWeight:FontWeight.w600 );
 
   static const tile=TextStyle(color:Colors.white,fontSize:20,fontWeight:FontWeight.w600 );

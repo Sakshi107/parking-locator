@@ -12,7 +12,7 @@ class BorderedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       elevation: 0.5,
-      color: Colors.lightBlue[50],
+      color:Color(0xFFC7D3D4).withOpacity(0.9),
      
       // margin: margin ??  const EdgeInsets.symmetric(vertical: 4.0),
       child: Container(

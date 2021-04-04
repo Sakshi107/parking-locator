@@ -272,11 +272,15 @@ class DbBookingMethods {
 
     print(res.statusCode);
     print(res.body);
+      var json = convert.jsonDecode(res.body);
+      print(json);
+      
     if (res.statusCode == 200) {
       print("Confirm booking");
     } else {
       throw Exception('Failed confirm booking.');
     }
+    return json;
   }
 
   checkout(spotid) async {

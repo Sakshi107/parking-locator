@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parking_locator/services/auth_service.dart';
+import 'package:parking_locator/constants.dart';
 
 
 // import 'package:firebase_auth/firebase_auth.dart';
@@ -9,9 +10,9 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  static const mainColor = Color(0xFFAFEADC);
-  static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
+  static const mainColor = Constants.mainColor;
+  static const secColor = Constants.secColor;
+  static const backgroundColor = Constants.mainColor;
 
   final TextEditingController _controller = TextEditingController();
   Future<void> _alertDialogBuilder(String error) async {
@@ -99,7 +100,7 @@ class _LoginState extends State<Login> {
           ),
         ),
         Text(
-          "CarBuddy",
+          "ParkMe",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -189,7 +190,7 @@ class _LoginState extends State<Login> {
           child: Container(
             height: 40,
             decoration: BoxDecoration(
-              color: Color(0xFF041E42), //Color(0xFF1C1C1C),
+              color: secColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(25),
               ),

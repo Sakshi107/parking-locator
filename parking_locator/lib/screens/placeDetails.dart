@@ -75,9 +75,10 @@ class _PlaceDetailsState extends State<PlaceDetails> {
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cark Park"),
-      ),
-      drawer: NavDrawer(),
+          backgroundColor: Constants.secColor,
+          title: Text("ParkMe"),
+        ),
+      // drawer: NavDrawer(),
       body: place != null
           ? Padding(
               padding: const EdgeInsets.all(8.0),
@@ -106,7 +107,9 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children:[ 
                           ElevatedButton(
+                          
                           style: ElevatedButton.styleFrom(
+                            
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(20.0),
                             ),
