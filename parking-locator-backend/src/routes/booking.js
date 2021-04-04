@@ -49,6 +49,7 @@ router.post("/checkin", async (req, res) => {
 router.post("/bookPrior", async (req, res) => {
   try {
     const { spotID, startTime, duration } = req.body;
+    console.log(startTime);
     const { userID } = req.user;
     const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
     if (parkingSpot) {

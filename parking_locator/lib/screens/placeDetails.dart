@@ -75,9 +75,9 @@ class _PlaceDetailsState extends State<PlaceDetails> {
     double _width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Constants.secColor,
-        title: Text("ParkMe"),
-      ),
+          backgroundColor: Constants.secColor,
+          title: Text("Book Parking Spot"),
+        ),
       // drawer: NavDrawer(),
       body: place != null
           ? Padding(
