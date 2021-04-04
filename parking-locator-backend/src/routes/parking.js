@@ -9,7 +9,8 @@ router.get("/", (req, res) => {
 });
 
 router.get("/nearme", async (req, res) => {
-  const { lat, long, radius = 1000 } = req.query;
+  const { lat, long, radius = 10000 } = req.query;
+  
   const currentTimeinMinutesFromStartOfDay = moment().diff(moment().startOf("day"), "minutes");
   try {
     const parkingsNearMe = await ParkingLocations.find(
@@ -17,10 +18,10 @@ router.get("/nearme", async (req, res) => {
         Location: {
           $near: { $geometry: { type: "Point", coordinates: [lat, long] }, $maxDistance: radius },
         },
-        // $and: [
-        //   { "activeHours.start": { $lte: currentTimeinMinutesFromStartOfDay } },
-        //   { "activeHours.end": { $gte: currentTimeinMinutesFromStartOfDay } },
-        // ],
+        $and: [
+          { "activeHours.start": { $lte: currentTimeinMinutesFromStartOfDay } },
+          { "activeHours.end": { $gte: currentTimeinMinutesFromStartOfDay } },
+        ],
         isEmpty: true,
       },
       { slotID: 1, "Location.coordinates": 1, address: 1, activeHours: 1 }

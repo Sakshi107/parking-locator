@@ -55,7 +55,7 @@ class NavDrawer extends StatelessWidget {
           Divider(color: Constants.secColor),
           ListTile(
             leading: Icon(
-                    Icons.menu,
+                    Icons.car_repair,
                     color: Constants.secColor,
                   ),
             title: Text('My Parking slots'),
@@ -64,7 +64,7 @@ class NavDrawer extends StatelessWidget {
           Divider(color: Constants.secColor),
           ListTile(
             leading: Icon(
-                    Icons.menu,
+                    Icons.book,
                     color: Constants.secColor,
                   ),
             title: Text('My Bookings'),

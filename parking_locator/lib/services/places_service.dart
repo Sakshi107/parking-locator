@@ -27,7 +27,9 @@ class PlacesService {
     var json = convert.jsonDecode(response.body);
     // print(json);
     var jsonResults = json['parkings'];
-    // print("im here");
+    print("im here inside place servuces");
+    print(lat);
+    print(lng);
     print(jsonResults);
     // for (int i = 0; i < jsonResults.length; i++) {
     //   print(i);

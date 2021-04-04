@@ -425,7 +425,7 @@ class _AddFormState extends State<AddForm> {
                 ),
                 CustomFormField(
                     labelText: "Charge per hour " + '\u{20B9}',
-                    validatorStr: "the text",
+                    validatorStr: "Enter number",
                     prefixicon: Icons.money,
                     onChanged: (val) => cost = int.parse(val)),
                 SizedBox(height: 15),
