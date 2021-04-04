@@ -33,7 +33,7 @@ class _MySpotsState extends State<MySpots> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Constants.secColor,
-          title: Text('Add a Parking Spot'),
+          title: Text('My Parking Spots'),
         ),
       body: Column(
         children: [

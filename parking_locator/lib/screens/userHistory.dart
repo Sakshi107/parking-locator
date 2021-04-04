@@ -35,7 +35,7 @@ class _MyHistoryState extends State<MyHistory> {
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Constants.secColor,
-          title: Text('Add a Parking Spot'),
+          title: Text('My Bookings'),
         ),
       body: Column(
         children: [
