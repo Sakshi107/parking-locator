@@ -5,6 +5,8 @@ import 'package:parking_locator/services/marker_service.dart';
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:parking_locator/constants.dart';
+
 import 'package:geocoder/geocoder.dart';
 import '../models/place.dart';
 import 'package:parking_locator/screens/addForm.dart';
@@ -26,10 +28,11 @@ class _AddSpotState extends State<AddSpot> {
     final markerService = MarkerService();
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Constants.secColor,
           leading: GestureDetector(
               child: Icon(Icons.arrow_back_ios),
               onTap: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).pushReplacementNamed('/');
               }),
           title: Text('Add a Parking Spot'),
         ),
@@ -46,7 +49,7 @@ class _AddSpotState extends State<AddSpot> {
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add_location_rounded),
-          backgroundColor: Colors.green,
+          backgroundColor:  Constants.secColor,
           onPressed: () {
             Navigator.push(
                 context,

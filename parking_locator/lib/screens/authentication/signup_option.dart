@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:parking_locator/constants.dart';
 
 class SignUpOption extends StatelessWidget {
-  static const mainColor=Color(0xFFAFEADC);
-  static const secColor=Color(0xFF041E42);
-  static const backgroundColor=Color(0xFFAFEADC);
+  static const mainColor = Constants.mainColor;
+  static const secColor = Constants.secColor;
+  static const backgroundColor = Constants.mainColor;
   @override
   Widget build(BuildContext context) {
     return Column(

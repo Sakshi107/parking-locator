@@ -1,53 +1,78 @@
 import 'package:flutter/material.dart';
+import 'package:parking_locator/constants.dart';
 
-const kMainColor = Color(0xFFFF785B);
-const kSubMainColor = Color(0xFFDEE8FF);
-const headingColor = Color(0xFF002140);
+// const Constants.secColor = Color(0xFFFF785B);
+// const kSubMainColor = Color(0xFFDEE8FF);
+// const headingColor = Color(0xFF002140);
 
 class NavDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Container(
-        color: kSubMainColor,
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: <Widget>[
-            DrawerHeader(
-              child: Center(
-                child: Column(
-                  children: [
-                    Text(
-                      'BOOK PARK',
-                      style: TextStyle(color: headingColor, fontSize: 28),
+        child: Container(
+      color:Constants.mainColor,
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: <Widget>[
+          DrawerHeader(
+            child: Center(
+              child: Column(
+                children: [
+                  Text(
+                    'BOOK PARK',
+                    style: TextStyle(color: Constants.secColor, fontSize: 28),
+                  ),
+                  SizedBox(height:10.0),
+                  CircleAvatar(
+                    maxRadius: 35,
+                    backgroundColor:Constants.secColor,
+                    child: Text(
+                      "P",
+                      style: TextStyle(color: Constants.mainColor, fontSize: 40.0),
                     ),
-                    CircleAvatar(
-                      maxRadius:35,
-                      backgroundColor: kMainColor,
-                      child: Text(
-                        "M",
-                        style: TextStyle(color:headingColor,fontSize: 40.0),
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
+          ),
           ListTile(
+            leading: Icon(
+                    Icons.menu,
+                    color: Constants.secColor,
+                  ),
+            title: Text('Home'),
+            onTap: () => {Navigator.of(context).pushNamed('/search')},
+          ),
+          Divider(color: Constants.secColor),
+          ListTile(
+            leading: Icon(
+                    Icons.add_box,
+                    color: Constants.secColor,
+                  ),
             title: Text('Add Spot'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/add_spot')},
+            onTap: () => {Navigator.of(context).pushNamed('/add_spot')},
           ),
-        
-           Divider(color: kMainColor),
+          Divider(color: Constants.secColor),
           ListTile(
+            leading: Icon(
+                    Icons.menu,
+                    color: Constants.secColor,
+                  ),
             title: Text('My Parking slots'),
-            onTap: () => {Navigator.of(context).pushReplacementNamed('/my_parking')},
+            onTap: () => {Navigator.of(context).pushNamed('/my_spots')},
           ),
-          Divider(color: kMainColor),
-          
+          Divider(color: Constants.secColor),
+          ListTile(
+            leading: Icon(
+                    Icons.menu,
+                    color: Constants.secColor,
+                  ),
+            title: Text('My Bookings'),
+            onTap: () => {Navigator.of(context).pushNamed('/my_booking')},
+          ),
+          Divider(color: Constants.secColor),
         ],
       ),
-    ),
-    );
+    ));
   }
 }

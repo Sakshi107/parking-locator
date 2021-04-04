@@ -4,6 +4,8 @@ import 'package:parking_locator/screens/authentication/login.dart';
 import 'package:parking_locator/screens/authentication/login_option.dart';
 import 'package:parking_locator/screens/authentication/signup.dart';
 import 'package:parking_locator/screens/authentication/signup_option.dart';
+import 'package:parking_locator/constants.dart';
+
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,9 +15,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
 
   bool login = true;
-  static const mainColor=Color(0xFFAFEADC);
-static const secColor=Color(0xFF041E42);
-static const backgroundColor=Color(0xFFAFEADC);
+ static const mainColor = Constants.mainColor;
+  static const secColor = Constants.secColor;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,9 +92,9 @@ static const backgroundColor=Color(0xFFAFEADC);
 }
 
 class CurvePainter extends CustomPainter {
-static const mainColor=Color(0xFFAFEADC);
-static const secColor=Color(0xFF041E42);
-static const backgroundColor=Color(0xFFAFEADC);
+  static const mainColor = Constants.mainColor;
+  static const secColor = Constants.secColor;
+  static const backgroundColor = Constants.mainColor;
   bool outterCurve;
 
   CurvePainter(this.outterCurve);

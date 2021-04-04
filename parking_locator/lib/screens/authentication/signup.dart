@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parking_locator/services/auth_service.dart';
 import 'package:parking_locator/widgets/form_input.dart';
 
+import 'package:parking_locator/constants.dart';
 
 
 
@@ -11,9 +12,9 @@ class SignUp extends StatefulWidget {
 }
 
 class _SignUpState extends State<SignUp> {
-  static const mainColor = Color(0xFFAFEADC);
-  static const secColor = Color(0xFF041E42);
-  static const backgroundColor = Color(0xFFAFEADC);
+  static const mainColor = Constants.mainColor;
+  static const secColor = Constants.secColor;
+  static const backgroundColor = Constants.mainColor;
   AuthMethods _authMethods = AuthMethods();
 
   Future<void> _alertDialogBuilder(String error) async {
@@ -89,7 +90,7 @@ class _SignUpState extends State<SignUp> {
           ),
         ),
         Text(
-          "CarPark",
+          "ParkMe",
           style: TextStyle(
             fontSize: 36,
             fontWeight: FontWeight.bold,
@@ -128,6 +129,9 @@ class _SignUpState extends State<SignUp> {
           type:TextInputType.phone,
           isPassword: false,
         ),
+        SizedBox(
+          height: 16,
+        ),
         Input(str:"Password",
          onChanged: (value) {
             _registerPassword = value;
@@ -135,6 +139,9 @@ class _SignUpState extends State<SignUp> {
           type:TextInputType.visiblePassword,
           isPassword: true,
        ),
+         SizedBox(
+          height: 16,
+        ),
         InkWell(
           child: Container(
             

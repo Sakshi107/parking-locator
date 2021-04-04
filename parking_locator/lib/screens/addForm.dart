@@ -5,9 +5,9 @@ import 'package:date_format/date_format.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:parking_locator/screens/addSpot.dart';
 import 'package:parking_locator/services/dbservice.dart';
+import 'package:parking_locator/constants.dart';
 
-const kMainColor = Color(0xFFFF785B);
-const kSubMainColor = Color(0xFFDEE8FF);
+
 const headingColor = Color(0xFF002140);
 
 class AddForm extends StatefulWidget {
@@ -42,6 +42,7 @@ class _AddFormState extends State<AddForm> {
   TimeOfDay selectedToTime = TimeOfDay(hour: 00, minute: 00);
   // String address;
   double lat, long;
+  int cost;
   TimeOfDay startTime, endTime;
   String _selectedType, parkingtype, address;
   List<String> _typeList = ['Open', 'Covered'];
@@ -155,7 +156,7 @@ class _AddFormState extends State<AddForm> {
         barrierDismissible: false,
         builder: (context) {
           return AlertDialog(
-            title: Text("Error"),
+            title: Text("Message"),
             content: Container(
               child: Text(error),
             ),
@@ -171,18 +172,18 @@ class _AddFormState extends State<AddForm> {
         });
   }
 
-  Future<String> add() async {
+  Future<dynamic> add() async {
     print(startTime);
     print(endTime);
     var start = formatTimeOfDay(startTime).toString();
     var end = formatTimeOfDay(endTime).toString();
-    print("end"+end);
+    print("end" + end);
 //         toTime: formatTimeOfDay(selectedToTime).toString(),
-    await _addSpot
-        .addSpot(_lat, _long, start, end, address, parkingtype)
-        .then((obj) => print("Added parking spot"))
-        .catchError((error) => print("Failed to add the parking spot: $error"));
-    return "xyz";
+    return await _addSpot.addSpot(
+            _lat, _long, start, end, address, parkingtype, cost)
+        // .then((obj) => return "Added parking spot";
+        // .catchError((error) => return "Failed to add the parking spot: $error";
+        ;
   }
 
   void _submit() async {
@@ -206,16 +207,21 @@ class _AddFormState extends State<AddForm> {
     print(endTime);
     print(parkingtype);
     print(address);
-    String _addSpotFeedback = await add();
-    if (_addSpotFeedback != null) {
-      _alertDialogBuilder(_addSpotFeedback);
+    print(cost);
+    // var obj = await add();
+    // print("imhereee");
+    // print(obj);
+    // if (obj["status"] == "SUCCESS") {
+    //   _alertDialogBuilder("Your parking spot has been added");
 
-      setState(() {
-        _formLoading = false;
-      });
-    } else {
-      Navigator.pop(context);
-    }
+    //   setState(() {
+    //     _formLoading = false;
+    //   });
+    //   //Navigator.pop(context);
+    // } else {
+    //   _alertDialogBuilder("Unable to add your parking spot");
+    //   Navigator.pop(context);
+    // }
   }
 
   double _lat = 0;
@@ -233,6 +239,7 @@ class _AddFormState extends State<AddForm> {
     dateTime = DateFormat.yMd().format(DateTime.now());
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Constants.secColor,
           leading: GestureDetector(
               child: Icon(Icons.arrow_back_ios),
               onTap: () {
@@ -242,216 +249,248 @@ class _AddFormState extends State<AddForm> {
         ),
         body: Form(
           key: _formKey,
-          child: Column(
-            children: [
-              Text(widget.address),
-              DropdownButton(
-                hint: Text('Please choose a Parking Type'),
-                value: _selectedType,
-                onChanged: (newValue) {
-                  setState(() {
-                    _selectedType = newValue;
-                  });
-                },
-                items: _typeList.map((type) {
-                  return DropdownMenuItem(
-                    child: new Text(type),
-                    value: type,
-                  );
-                }).toList(),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                onTap: () {
-                  _selectDate(context);
-                  // getUserLocation();
-                },
-                child: Container(
-                  width: _width / 2.4,
-                  height: _height / 10,
-                  margin: EdgeInsets.only(top: 30),
-                  alignment: Alignment.center,
-                  // decoration: BoxDecoration(color: Colors.grey[200]),
-                  child: TextFormField(
-                      // style: TextStyle(fontSize: 40),
-                      textAlign: TextAlign.center,
-                      enabled: false,
-                      keyboardType: TextInputType.text,
-                      controller: _dateController,
-                      onSaved: (String val) {
-                        _setDate = val;
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Card(
+                    child: ListTile(
+                      tileColor: Constants.secColor.withOpacity(0.3),
+                      title:
+                          Text(widget.address,style: TextStyle(color:Colors.black),),
+                      subtitle: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SizedBox(
+                            height: 3.0,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                        ],
+                      ),
+                    )
+                    ),
+              SizedBox(height:15),
+                DropdownButton(
+                  hint: Text('Please choose a Parking Type'),
+                  value: _selectedType,
+                  onChanged: (newValue) {
+                    setState(() {
+                      _selectedType = newValue;
+                    });
+                  },
+                  items: _typeList.map((type) {
+                    return DropdownMenuItem(
+                      child: new Text(type),
+                      value: type,
+                    );
+                  }).toList(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                InkWell(
+                  onTap: () {
+                    _selectDate(context);
+                    // getUserLocation();
+                  },
+                  child: Container(
+                    width: _width / 2.4,
+                    height: _height / 10,
+                    margin: EdgeInsets.only(top: 30),
+                    alignment: Alignment.center,
+                    // decoration: BoxDecoration(color: Colors.grey[200]),
+                    child: TextFormField(
+                        // style: TextStyle(fontSize: 40),
+                        textAlign: TextAlign.center,
+                        enabled: false,
+                        keyboardType: TextInputType.text,
+                        controller: _dateController,
+                        onSaved: (String val) {
+                          _setDate = val;
+                        },
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(
+                            Icons.calendar_today,
+                            color: Constants.secColor,
+                          ),
+                          enabledBorder: const OutlineInputBorder(
+                            borderSide:
+                                const BorderSide(color: Constants.secColor, width: 1.0),
+                          ),
+                          border: OutlineInputBorder(
+                            // borderRadius: new BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Constants.secColor),
+                          ),
+                          focusedBorder: new OutlineInputBorder(
+                            // borderRadius: new BorderRadius.circular(20.0),
+                            borderSide: BorderSide(color: Constants.secColor),
+                          ),
+                          labelStyle:
+                              new TextStyle(color: headingColor, fontSize: 15),
+                          labelText: "On date",
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        _selectTime(context, 0);
                       },
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(
-                          Icons.calendar_today,
-                          color: kMainColor,
-                        ),
-                        enabledBorder: const OutlineInputBorder(
-                          borderSide:
-                              const BorderSide(color: kMainColor, width: 1.0),
-                        ),
-                        border: OutlineInputBorder(
-                          // borderRadius: new BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: kMainColor),
-                        ),
-                        focusedBorder: new OutlineInputBorder(
-                          // borderRadius: new BorderRadius.circular(20.0),
-                          borderSide: BorderSide(color: kMainColor),
-                        ),
-                        labelStyle:
-                            new TextStyle(color: headingColor, fontSize: 15),
-                        labelText: "On date",
-                      )),
+                      child: Container(
+                        // padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                        width: _width / 2.4,
+                        height: _height / 10,
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                            // style: TextStyle(fontSize: 40),
+                            textAlign: TextAlign.center,
+                            onSaved: (String val) {
+                              _setFromTime = val;
+                            },
+                            enabled: false,
+                            keyboardType: TextInputType.text,
+                            controller: _timeControllerFrom,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(5),
+                              prefixIcon: Icon(
+                                Icons.alarm,
+                                color: Constants.secColor,
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Constants.secColor, width: 1.0),
+                              ),
+                              border: OutlineInputBorder(
+                                // borderRadius: new BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Constants.secColor),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                // borderRadius: new BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Constants.secColor),
+                              ),
+                              labelStyle: new TextStyle(
+                                  color: headingColor, fontSize: 15),
+                              labelText: "From time",
+                            )),
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _selectTime(context, 1);
+                      },
+                      child: Container(
+                        width: _width / 2.4,
+                        height: _height / 10,
+                        alignment: Alignment.center,
+                        child: TextFormField(
+                            textAlign: TextAlign.center,
+                            onSaved: (String val) {
+                              _setToTime = val;
+                            },
+                            enabled: false,
+                            keyboardType: TextInputType.text,
+                            controller: _timeControllerTo,
+                            decoration: InputDecoration(
+                              contentPadding: EdgeInsets.all(5),
+                              prefixIcon: Icon(
+                                Icons.alarm,
+                                color: Constants.secColor,
+                              ),
+                              enabledBorder: const OutlineInputBorder(
+                                borderSide: const BorderSide(
+                                    color: Constants.secColor, width: 1.0),
+                              ),
+                              border: OutlineInputBorder(
+                                // borderRadius: new BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Constants.secColor),
+                              ),
+                              focusedBorder: new OutlineInputBorder(
+                                // borderRadius: new BorderRadius.circular(20.0),
+                                borderSide: BorderSide(color: Constants.secColor),
+                              ),
+                              labelStyle: new TextStyle(
+                                  color: headingColor, fontSize: 15),
+                              labelText: "To time",
+                            )),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      _selectTime(context, 0);
-                    },
-                    child: Container(
-                      // padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      width: _width / 2.4,
-                      height: _height / 10,
-                      alignment: Alignment.center,
-                      child: TextFormField(
-                          // style: TextStyle(fontSize: 40),
-                          textAlign: TextAlign.center,
-                          onSaved: (String val) {
-                            _setFromTime = val;
-                          },
-                          enabled: false,
-                          keyboardType: TextInputType.text,
-                          controller: _timeControllerFrom,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(5),
-                            prefixIcon: Icon(
-                              Icons.alarm,
-                              color: kMainColor,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: kMainColor, width: 1.0),
-                            ),
-                            border: OutlineInputBorder(
-                              // borderRadius: new BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: kMainColor),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              // borderRadius: new BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: kMainColor),
-                            ),
-                            labelStyle: new TextStyle(
-                                color: headingColor, fontSize: 15),
-                            labelText: "From time",
-                          )),
-                    ),
+                CustomFormField(
+                    labelText: "Charge per hour " + '\u{20B9}',
+                    validatorStr: "the text",
+                    prefixicon: Icons.money,
+                    onChanged: (val) => cost = int.parse(val)),
+                    SizedBox(height:15),
+                Center(
+                    child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(20.0),
+                      ),
+                      primary: Constants.secColor),
+                  onPressed: () {
+                    if (_formKey.currentState.validate()) {
+                      // If the form is valid, display a Snackbar.
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Processing Data')));
+                      _submit();
+                    }
+                  },
+                  child: Text(
+                    'Submit',
+                    style: TextStyle(fontSize: 16.9, color: Colors.white),
                   ),
-                  InkWell(
-                    onTap: () {
-                      _selectTime(context, 1);
-                    },
-                    child: Container(
-                      width: _width / 2.4,
-                      height: _height / 10,
-                      alignment: Alignment.center,
-                      child: TextFormField(
-                          textAlign: TextAlign.center,
-                          onSaved: (String val) {
-                            _setToTime = val;
-                          },
-                          enabled: false,
-                          keyboardType: TextInputType.text,
-                          controller: _timeControllerTo,
-                          decoration: InputDecoration(
-                            contentPadding: EdgeInsets.all(5),
-                            prefixIcon: Icon(
-                              Icons.alarm,
-                              color: kMainColor,
-                            ),
-                            enabledBorder: const OutlineInputBorder(
-                              borderSide: const BorderSide(
-                                  color: kMainColor, width: 1.0),
-                            ),
-                            border: OutlineInputBorder(
-                              // borderRadius: new BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: kMainColor),
-                            ),
-                            focusedBorder: new OutlineInputBorder(
-                              // borderRadius: new BorderRadius.circular(20.0),
-                              borderSide: BorderSide(color: kMainColor),
-                            ),
-                            labelStyle: new TextStyle(
-                                color: headingColor, fontSize: 15),
-                            labelText: "To time",
-                          )),
-                    ),
-                  ),
-                ],
-              ),
-              Center(
-                  child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(20.0),
-                    ),
-                    primary: kMainColor),
-                onPressed: () {
-                  if (_formKey.currentState.validate()) {
-                    // If the form is valid, display a Snackbar.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Processing Data')));
-                    _submit();
-                  }
-                },
-                child: Text(
-                  'Submit',
-                  style: TextStyle(fontSize: 16.9, color: Colors.white),
-                ),
-                // textColor: Colors.white70,
-              ))
-            ],
+                  // textColor: Colors.white70,
+                ))
+              ],
+            ),
           ),
         ));
   }
 }
 
 class CustomFormField extends StatelessWidget {
-  // final Function onChanged;
+  final Function onChanged;
   final String labelText;
+  final String validatorStr;
   final IconData prefixicon;
-  final String text;
 
   CustomFormField({
-    // @required this.onChanged,
+    @required this.onChanged,
     @required this.labelText,
-    @required this.text,
+    @required this.validatorStr,
     @required this.prefixicon,
-  });
-  // assert(onChanged != null),
-  // assert(validatorStr != null);
+  })  : assert(labelText != null),
+        // assert(onChanged != null),
+        assert(validatorStr != null);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
-      child: TextField(
-        enabled: false,
+      child: TextFormField(
+        validator: (value) {
+          if (value.length == 0) {
+            return (validatorStr);
+          }
+          return null;
+        },
+        onChanged: onChanged,
         decoration: InputDecoration(
-          hintText: text,
           prefixIcon: Icon(
             prefixicon,
-            color: kMainColor,
+            color: Constants.secColor,
           ),
           enabledBorder: const OutlineInputBorder(
-            borderSide: const BorderSide(color: kMainColor, width: 1.0),
+            borderSide: const BorderSide(color: Constants.secColor, width: 1.0),
           ),
           border: OutlineInputBorder(
             borderRadius: new BorderRadius.circular(20.0),
@@ -459,7 +498,7 @@ class CustomFormField extends StatelessWidget {
           ),
           focusedBorder: new OutlineInputBorder(
             borderRadius: new BorderRadius.circular(20.0),
-            borderSide: BorderSide(color: kMainColor),
+            borderSide: BorderSide(color: Constants.secColor),
           ),
           labelStyle: new TextStyle(color: headingColor, fontSize: 15),
           labelText: labelText,

@@ -11,13 +11,16 @@ router.get("/", async (req, res) => {
 
 router.post("/checkin", async (req, res) => {
   console.log(req.body);
+  console.log(req.user);
   const { userID } = req.user;
-  const { spotID, lat, long } = req.body;
+  const { spotID, lat, long,isEmpty } = req.body;
 
   const imageIfFull = "https://martolex-book-images.s3.ap-south-1.amazonaws.com/car-1.jpeg";
   try {
+    console.log("lets tryy");
     const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
     if (parkingSpot) {
+      console.log(parkingSpot);
       if (parkingSpot.isEmpty) {
         const parkingLocation = parkingSpot.Location.coordinates;
         const distance = getDistanceFromLatLonInKm(parkingLocation[0], parkingLocation[1], lat, long);
@@ -37,8 +40,7 @@ router.post("/checkin", async (req, res) => {
     } else {
       res.json({ status: "FAILED", message: "Slot not found" });
     }
-    if (isEmpty) {
-    }
+   
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });
   }

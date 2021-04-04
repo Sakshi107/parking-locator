@@ -10,8 +10,8 @@ class MarkerService {
       Marker marker = Marker( 
         markerId: MarkerId(place.address),
         draggable: false,
-        icon: place.icon,
-        // icon:BitmapDescriptor.defaultMarker,
+        // icon: place.icon,
+        icon:BitmapDescriptor.defaultMarker,
         infoWindow: InfoWindow(title: place.address),
         position: LatLng(place.lat, place.long)
       );

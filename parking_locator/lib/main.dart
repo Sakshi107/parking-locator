@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:parking_locator/models/place.dart';
 
-// import 'package:parking_locator/screens/authentication/auth.dart';
 import 'package:parking_locator/screens/authentication/auth2.dart';
+import 'package:parking_locator/screens/authentication/auth.dart';
 import 'package:parking_locator/screens/addSpot.dart';
+import 'package:parking_locator/screens/mySpots.dart';
+import 'package:parking_locator/screens/placeDetails.dart';
+import 'package:parking_locator/screens/userHistory.dart';
 
 import 'package:parking_locator/screens/search.dart';
 
@@ -45,16 +48,18 @@ class MyApp extends StatelessWidget {
           theme: ThemeData(
             primarySwatch: Colors.blue,
           ),
-          // home: Search(),
-          // home: SignUpSection(),
+
           initialRoute: '/',
           routes: {
-            '/': (context) => Search(),
+            // '/': (context) => Search(),
 
-            // '/': (context) => AuthScreen(),
+            '/': (context) => AuthScreen(),
             '/auth': (context) => HomePage(),
             '/search': (context) => Search(),
-            '/add_spot':(context)=>AddSpot()
+            '/add_spot': (context) => AddSpot(),
+            '/my_spots': (context) => MySpots(),
+            '/place_details': (context) => PlaceDetails(),
+            '/my_booking': (context) => MyHistory(),
           },
         ));
   }

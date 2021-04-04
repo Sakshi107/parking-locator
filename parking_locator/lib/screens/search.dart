@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:parking_locator/screens/placeDetails.dart';
 import 'package:parking_locator/services/geolocator_service.dart';
+// import 'package:parking_locator/services/dbservice.dart';
+// import 'package:parking_locator/screens/confirm_booking.dart';
 import 'package:parking_locator/services/marker_service.dart';
 import 'package:parking_locator/widgets/drawer.dart';
+import 'package:parking_locator/constants.dart';
+
+
 
 import 'package:provider/provider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -21,8 +26,11 @@ class Search extends StatelessWidget {
     return FutureProvider(
       create: (context) => placesProvider,
       child: Scaffold(
-        appBar:AppBar(title: Text("Cark Park"),),
-        drawer:NavDrawer() ,
+        appBar: AppBar(
+          backgroundColor: Constants.secColor,
+          title: Text("ParkMe"),
+        ),
+        drawer: NavDrawer(),
         body: (currentPosition != null)
             ? Consumer<List<Place>>(
                 builder: (_, places, __) {
@@ -33,7 +41,7 @@ class Search extends StatelessWidget {
                       ? Column(
                           children: <Widget>[
                             Container(
-                              height: MediaQuery.of(context).size.height / 1.5,
+                              height: MediaQuery.of(context).size.height / 2,
                               width: MediaQuery.of(context).size.width,
                               child: GoogleMap(
                                 initialCameraPosition: CameraPosition(
@@ -48,11 +56,14 @@ class Search extends StatelessWidget {
                               height: 10.0,
                             ),
                             Expanded(
+                              child:Container(
+                                 color: Constants.mainColor,
                               child: (places.length > 0)
                                   ? ListView.builder(
                                       itemCount: places.length,
                                       itemBuilder: (context, index) {
                                         return FutureProvider(
+                                          initialData: Container(),
                                           create: (context) =>
                                               geoService.getDistance(
                                             currentPosition.latitude,
@@ -60,31 +71,45 @@ class Search extends StatelessWidget {
                                             places[index].lat,
                                             places[index].long,
                                           ),
-                                          child: Card(
-                                            child: ListTile(
-                                              title:
-                                                  Text(places[index].address),
-                                              subtitle: Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    height: 3.0,
-                                                  ),
-                                                  SizedBox(
-                                                    height: 5.0,
-                                                  ),
-                                                ],
-                                              ),
-                                              trailing: IconButton(
-                                                icon: Icon(Icons.directions),
-                                                color: Theme.of(context)
-                                                    .primaryColor,
-                                                onPressed: () {
-                                                  _launchMapsUrl(
-                                                      places[index].lat,
-                                                      places[index].long);
-                                                },
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        PlaceDetails(
+                                                      spotId:
+                                                          places[index].slotID,
+                                                    ),
+                                                  ));
+                                            },
+                                            child: Card(
+                                             
+                                              child: ListTile(
+                                                title:
+                                                    Text(places[index].address,style: TextStyle(color:Constants.secColor),),
+                                                subtitle: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    SizedBox(
+                                                      height: 3.0,
+                                                    ),
+                                                    SizedBox(
+                                                      height: 5.0,
+                                                    ),
+                                                  ],
+                                                ),
+                                                trailing: IconButton(
+                                                  icon: Icon(Icons.directions),
+                                                  color: Theme.of(context)
+                                                      .primaryColor,
+                                                  onPressed: () {
+                                                    _launchMapsUrl(
+                                                        places[index].lat,
+                                                        places[index].long);
+                                                  },
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -93,6 +118,7 @@ class Search extends StatelessWidget {
                                   : Center(
                                       child: Text('No Parking Found Nearby'),
                                     ),
+                            )
                             )
                           ],
                         )
