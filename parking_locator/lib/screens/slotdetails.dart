@@ -255,7 +255,8 @@ class _SlotDetailsState extends State<SlotDetails> {
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20.0),
                         ),
-                        primary:Constants.secColor),
+                        //primary:Constants.secColor
+                      ),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         // If the form is valid, display a Snackbar.
@@ -272,18 +273,21 @@ class _SlotDetailsState extends State<SlotDetails> {
                   ))
                 ],
               )),
+          SizedBox(height:5.0),
           Text("Slot's booking details"),
+          SizedBox(height:10.0),
           Expanded(
               child: (spotbooking != null)
                   ? ListView.builder(
                       itemCount: spotbooking.length,
                       itemBuilder: (context, index) {
                         return Container(
+                          //color:Constants.mainColor,
                           child: Card(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(15.0),
                             ),
-                            color: Colors.white,
+                            color: Constants.secColor.withOpacity(0.7),
                             elevation: 7,
                             child: InkWell(
                                 borderRadius: BorderRadius.circular(15.0),
@@ -324,10 +328,10 @@ class _SlotDetailsState extends State<SlotDetails> {
                                       ListTile(
                                         isThreeLine: true,
                                         title: Text(
-                                            spotbooking[index]['user']['name']),
+                                            spotbooking[index]['user']['name'],style: TextStyle(color:Colors.white),),
                                         subtitle: Text("User email id: " +
                                             spotbooking[index]['user']
-                                                ['email']),
+                                                ['email'],style: TextStyle(color:Colors.white),),
                                       )
                                     ],
                                   ),
