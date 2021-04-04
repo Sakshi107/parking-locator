@@ -15,7 +15,7 @@ router.post("/myParking", async (req, res) => {
     const { lat, long, startTime, endTime, address, parkingType, chargesPerHour } = req.body;
     const { userID } = req.user;
     const startTimeObj = moment(startTime, TIME_FORMAT);
-
+    console.log(req.body);
     const endTimeObj = moment(endTime, TIME_FORMAT);
     console.log(endTime);
     const startOfDay = moment().startOf("day");
@@ -162,6 +162,16 @@ router.get("/bookings", async (req, res) => {
         },
       },
     ]);
+    res.json({ status: "SUCCESS", bookings });
+  } catch (error) {
+    res.status(500).send({ message: error.message, errorType: error.name });
+  }
+});
+
+router.get("/bookings/active", async (req, res) => {
+  const { userID } = req.user;
+  try {
+    const bookings = await ParkingHistory.find({ userID,endTime:undefined });
     res.json({ status: "SUCCESS", bookings });
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });

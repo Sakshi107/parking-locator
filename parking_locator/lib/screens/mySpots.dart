@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:parking_locator/services/dbservice.dart';
 import 'package:parking_locator/screens/slotdetails.dart';
+import 'package:parking_locator/constants.dart';
+
 
 class MySpots extends StatefulWidget {
   @override
@@ -30,13 +32,9 @@ class _MySpotsState extends State<MySpots> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios),
-            onTap: () {
-              Navigator.of(context).pushNamed('/');
-            }),
-        title: Text('My Parking Spots'),
-      ),
+          backgroundColor: Constants.secColor,
+          title: Text('My Parking Spots'),
+        ),
       body: Column(
         children: [
           // Text(spots[1]['address']),

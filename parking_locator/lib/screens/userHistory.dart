@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking_locator/services/dbservice.dart';
+import 'package:parking_locator/constants.dart';
+
 
 class MyHistory extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _MyHistoryState extends State<MyHistory> {
     result = await db_methods.userHistory();
     setState(() {
       history = result;
+      print("My History ");
+      print(history);
     });
   }
 
@@ -30,13 +34,9 @@ class _MyHistoryState extends State<MyHistory> {
     final width = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios),
-            onTap: () {
-              Navigator.of(context).pushNamed('/');
-            }),
-        title: Text('My History'),
-      ),
+          backgroundColor: Constants.secColor,
+          title: Text('My Bookings'),
+        ),
       body: Column(
         children: [
           // Text(spots[1]['address']),

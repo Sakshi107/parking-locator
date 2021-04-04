@@ -7,7 +7,6 @@ import 'package:parking_locator/screens/addSpot.dart';
 import 'package:parking_locator/services/dbservice.dart';
 import 'package:parking_locator/constants.dart';
 
-
 const headingColor = Color(0xFF002140);
 
 class AddForm extends StatefulWidget {
@@ -180,10 +179,7 @@ class _AddFormState extends State<AddForm> {
     print("end" + end);
 //         toTime: formatTimeOfDay(selectedToTime).toString(),
     return await _addSpot.addSpot(
-            _lat, _long, start, end, address, parkingtype, cost)
-        // .then((obj) => return "Added parking spot";
-        // .catchError((error) => return "Failed to add the parking spot: $error";
-        ;
+        _lat, _long, start, end, address, parkingtype, cost);
   }
 
   void _submit() async {
@@ -208,20 +204,20 @@ class _AddFormState extends State<AddForm> {
     print(parkingtype);
     print(address);
     print(cost);
-    // var obj = await add();
-    // print("imhereee");
-    // print(obj);
-    // if (obj["status"] == "SUCCESS") {
-    //   _alertDialogBuilder("Your parking spot has been added");
+    var obj = await add();
+    print("imhereee");
+    print(obj);
+    if (obj["status"] == "SUCCESS") {
+      _alertDialogBuilder("Your parking spot has been added");
 
-    //   setState(() {
-    //     _formLoading = false;
-    //   });
-    //   //Navigator.pop(context);
-    // } else {
-    //   _alertDialogBuilder("Unable to add your parking spot");
-    //   Navigator.pop(context);
-    // }
+      setState(() {
+        _formLoading = false;
+      });
+      //Navigator.pop(context);
+    } else {
+      _alertDialogBuilder("Unable to add your parking spot");
+      Navigator.pop(context);
+    }
   }
 
   double _lat = 0;
@@ -254,24 +250,24 @@ class _AddFormState extends State<AddForm> {
               children: [
                 Card(
                     child: ListTile(
-                      tileColor: Constants.secColor.withOpacity(0.3),
-                      title:
-                          Text(widget.address,style: TextStyle(color:Colors.black),),
-                      subtitle: Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: <Widget>[
-                          SizedBox(
-                            height: 3.0,
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                        ],
+                  tileColor: Constants.secColor.withOpacity(0.3),
+                  title: Text(
+                    widget.address,
+                    style: TextStyle(color: Colors.black),
+                  ),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 3.0,
                       ),
-                    )
-                    ),
-              SizedBox(height:15),
+                      SizedBox(
+                        height: 5.0,
+                      ),
+                    ],
+                  ),
+                )),
+                SizedBox(height: 15),
                 DropdownButton(
                   hint: Text('Please choose a Parking Type'),
                   value: _selectedType,
@@ -316,8 +312,8 @@ class _AddFormState extends State<AddForm> {
                             color: Constants.secColor,
                           ),
                           enabledBorder: const OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: Constants.secColor, width: 1.0),
+                            borderSide: const BorderSide(
+                                color: Constants.secColor, width: 1.0),
                           ),
                           border: OutlineInputBorder(
                             // borderRadius: new BorderRadius.circular(20.0),
@@ -369,11 +365,13 @@ class _AddFormState extends State<AddForm> {
                               ),
                               border: OutlineInputBorder(
                                 // borderRadius: new BorderRadius.circular(20.0),
-                                borderSide: BorderSide(color: Constants.secColor),
+                                borderSide:
+                                    BorderSide(color: Constants.secColor),
                               ),
                               focusedBorder: new OutlineInputBorder(
                                 // borderRadius: new BorderRadius.circular(20.0),
-                                borderSide: BorderSide(color: Constants.secColor),
+                                borderSide:
+                                    BorderSide(color: Constants.secColor),
                               ),
                               labelStyle: new TextStyle(
                                   color: headingColor, fontSize: 15),
@@ -409,11 +407,13 @@ class _AddFormState extends State<AddForm> {
                               ),
                               border: OutlineInputBorder(
                                 // borderRadius: new BorderRadius.circular(20.0),
-                                borderSide: BorderSide(color: Constants.secColor),
+                                borderSide:
+                                    BorderSide(color: Constants.secColor),
                               ),
                               focusedBorder: new OutlineInputBorder(
                                 // borderRadius: new BorderRadius.circular(20.0),
-                                borderSide: BorderSide(color: Constants.secColor),
+                                borderSide:
+                                    BorderSide(color: Constants.secColor),
                               ),
                               labelStyle: new TextStyle(
                                   color: headingColor, fontSize: 15),
@@ -428,7 +428,7 @@ class _AddFormState extends State<AddForm> {
                     validatorStr: "the text",
                     prefixicon: Icons.money,
                     onChanged: (val) => cost = int.parse(val)),
-                    SizedBox(height:15),
+                SizedBox(height: 15),
                 Center(
                     child: ElevatedButton(
                   style: ElevatedButton.styleFrom(

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:parking_locator/services/dbservice.dart';
 import 'package:intl/intl.dart';
 import 'package:date_format/date_format.dart';
+import 'package:parking_locator/constants.dart';
 
-const kMainColor = Color(0xFFFF785B);
-const kSubMainColor = Color(0xFFDEE8FF);
+
+
 const headingColor = Color(0xFF002140);
 
 class SlotDetails extends StatefulWidget {
@@ -150,14 +151,10 @@ class _SlotDetailsState extends State<SlotDetails> {
     _height = MediaQuery.of(context).size.height;
     _width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        leading: GestureDetector(
-            child: Icon(Icons.arrow_back_ios),
-            onTap: () {
-              Navigator.of(context).pushNamed('/');
-            }),
-        title: Text('Spot Details'),
-      ),
+     appBar: AppBar(
+          backgroundColor: Constants.secColor,
+          title: Text('Slot details'),
+        ),
       body: Column(
         children: [
           Form(
@@ -190,19 +187,19 @@ class _SlotDetailsState extends State<SlotDetails> {
                                 contentPadding: EdgeInsets.all(5),
                                 prefixIcon: Icon(
                                   Icons.alarm,
-                                  color: kMainColor,
+                                  color:Constants.secColor,
                                 ),
                                 enabledBorder: const OutlineInputBorder(
                                   borderSide: const BorderSide(
-                                      color: kMainColor, width: 1.0),
+                                      color:Constants.secColor, width: 1.0),
                                 ),
                                 border: OutlineInputBorder(
                                   // borderRadius: new BorderRadius.circular(20.0),
-                                  borderSide: BorderSide(color: kMainColor),
+                                  borderSide: BorderSide(color:Constants.secColor),
                                 ),
                                 focusedBorder: new OutlineInputBorder(
                                   // borderRadius: new BorderRadius.circular(20.0),
-                                  borderSide: BorderSide(color: kMainColor),
+                                  borderSide: BorderSide(color:Constants.secColor),
                                 ),
                                 labelStyle: new TextStyle(
                                     color: headingColor, fontSize: 15),
@@ -230,19 +227,19 @@ class _SlotDetailsState extends State<SlotDetails> {
                                 contentPadding: EdgeInsets.all(5),
                                 prefixIcon: Icon(
                                   Icons.alarm,
-                                  color: kMainColor,
+                                  color:Constants.secColor,
                                 ),
                                 enabledBorder: const OutlineInputBorder(
                                   borderSide: const BorderSide(
-                                      color: kMainColor, width: 1.0),
+                                      color:Constants.secColor, width: 1.0),
                                 ),
                                 border: OutlineInputBorder(
                                   // borderRadius: new BorderRadius.circular(20.0),
-                                  borderSide: BorderSide(color: kMainColor),
+                                  borderSide: BorderSide(color:Constants.secColor),
                                 ),
                                 focusedBorder: new OutlineInputBorder(
                                   // borderRadius: new BorderRadius.circular(20.0),
-                                  borderSide: BorderSide(color: kMainColor),
+                                  borderSide: BorderSide(color:Constants.secColor),
                                 ),
                                 labelStyle: new TextStyle(
                                     color: headingColor, fontSize: 15),
@@ -258,7 +255,7 @@ class _SlotDetailsState extends State<SlotDetails> {
                         shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(20.0),
                         ),
-                        primary: kMainColor),
+                        primary:Constants.secColor),
                     onPressed: () {
                       if (_formKey.currentState.validate()) {
                         // If the form is valid, display a Snackbar.

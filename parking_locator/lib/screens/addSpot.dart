@@ -29,11 +29,6 @@ class _AddSpotState extends State<AddSpot> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Constants.secColor,
-          leading: GestureDetector(
-              child: Icon(Icons.arrow_back_ios),
-              onTap: () {
-                Navigator.of(context).pushReplacementNamed('/');
-              }),
           title: Text('Add a Parking Spot'),
         ),
         body: GoogleMap(
