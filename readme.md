@@ -10,7 +10,7 @@
 
 </div><p align="center">
   <a href="" rel="noopener">
- <img width=200px src="images/emp.png"></a>
+ <img width=200px src="ss/logo.png"></a>
  
 </p>
 <h1 align = 'center'><b>Park ME</b></h1>
