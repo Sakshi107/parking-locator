@@ -31,7 +31,7 @@ router.post("/myParking", async (req, res) => {
       parkingType,
       chargesPerHour,
     });
-    
+
     res.json({ status: "SUCCESS", parking });
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });
@@ -144,8 +144,24 @@ router.delete("/myParking", async (req, res) => {
 
 router.get("/bookings", async (req, res) => {
   const { userID } = req.user;
+  console.log(userID);
   try {
-    const bookings = await ParkingHistory.find({ userID });
+    const bookings = await ParkingHistory.aggregate([
+      { $match: { userID } },
+      {
+        $lookup: {
+          from: "parkinglocations",
+          localField: "slotID",
+          foreignField: "slotID",
+          as: "parkingLocation",
+        },
+      },
+      {
+        $unwind: {
+          path: "$parkingLocation",
+        },
+      },
+    ]);
     res.json({ status: "SUCCESS", bookings });
   } catch (error) {
     res.status(500).send({ message: error.message, errorType: error.name });
