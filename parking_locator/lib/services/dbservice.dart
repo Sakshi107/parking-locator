@@ -10,6 +10,17 @@ class DbMethods {
     // try {
     var url = Uri.parse('http://127.0.0.1:5000/user/myParking');
     print(url);
+    var obj = {
+      "lat": lat,
+      "long": long,
+      "startTime": startTime,
+      "endTime": endTime,
+      "address": address,
+      "parkingType": type,
+      "chargesPerHour": cost
+    };
+    print(obj);
+   
     var res = await http.post(
       url,
       body: convert.json.encode({
@@ -70,7 +81,7 @@ class DbMethods {
 
   mySpots() async {
     String token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
     // try {
     var url = Uri.parse('http://127.0.0.1:5000/user/myParking');
     print(url);
@@ -92,7 +103,7 @@ class DbMethods {
 
   spotDetail(String spotID) async {
     String token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
     // try {
     var url = Uri.parse(
         'http://127.0.0.1:5000/user/myParking/bookings/?spotID=$spotID');
@@ -115,7 +126,7 @@ class DbMethods {
 
   bookingDetails(String spotID, startTime, endTime) async {
     String token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
     // try {
     var url = Uri.parse(
         'http://127.0.0.1:5000/user/myParking/$spotID/setActiveHours');
@@ -142,7 +153,7 @@ class DbMethods {
 
   userHistory() async {
     String token =
-        "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";
+        "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsIl9pZCI6IjYwNjZmYTZkYTQxY2JmMmEwOGY2YTY0NiIsIm5hbWUiOiJIaXJhbCIsImVtYWlsIjoiaGlyYWxAZ21haWwuY29tIiwibW9iaWxlIjoiMTIzNDU2Nzg5MCIsInVzZXJJRCI6IjE4NWNhZGQyLWI2Y2YtNGM4MC05MGZjLTc3M2Q5NTg3MGRhYiIsIl9fdiI6MCwiaWF0IjoxNjE3NDUzNjE5fQ.czhfN16oe57qpS8wt_CNt3giA2f5FFOvKjhD46IPnbU";
     // try {
     var url = Uri.parse('http://127.0.0.1:5000/user/bookings');
     print(url);
@@ -272,9 +283,9 @@ class DbBookingMethods {
 
     print(res.statusCode);
     print(res.body);
-      var json = convert.jsonDecode(res.body);
-      print(json);
-      
+    var json = convert.jsonDecode(res.body);
+    print(json);
+
     if (res.statusCode == 200) {
       print("Confirm booking");
     } else {

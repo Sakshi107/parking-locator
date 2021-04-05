@@ -45,7 +45,7 @@ class _LoginState extends State<Login> {
              _loginEmail,  _loginPassword)
         .then((value) => Navigator.pushReplacementNamed(context, '/search'))
         .catchError((error) => print("Failed to add user: $error"));
-    return "xyz";
+    return "Icorrect Password!";
   }
 
   void _submitForm() async {

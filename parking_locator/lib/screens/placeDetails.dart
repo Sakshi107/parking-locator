@@ -35,12 +35,50 @@ class _PlaceDetailsState extends State<PlaceDetails> {
       );
     }
   }
+    Future<void> _alertDialogBuilder(String error) async {
+    return showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Message"),
+            content: Container(
+              child: Text(error),
+            ),
+            actions: [
+              FlatButton(
+                child: Text("Close Dialog"),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              )
+            ],
+          );
+        });
+  }
+// void _submitForm() async {
 
+
+//     String _loginFeedback = await _loginAccount();
+
+//     if (_loginFeedback != null) {
+//       _alertDialogBuilder(_loginFeedback);
+
+     
+//     } else {
+//      Navigator.pop(context);
+//     }
+//   }
   void _submitAdvance(slotID) async {
     startTime = formatTimeOfDay(selectedFromTime).toString();
     var obj = await _dbmethod.PriorBook(slotID, startTime, duration);
     print(obj);
     if (obj["STATUS"] == "SUCCESS") {
+       _alertDialogBuilder("Booking in advance done");
+    }
+       else{
+          _alertDialogBuilder(obj["message"]);
+       }
       // Navigator.push(
       //     context,
       //     MaterialPageRoute(
@@ -50,7 +88,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
       //               bookingId: obj["bookingID"],
       //             )));
     }
-  }
+  
 
   void getDetails() async {
     var resPlace;
@@ -168,7 +206,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                                               child: Container(
                                                 // padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
                                                 width: _width / 2.4,
-                                                height: _height / 10,
+                                                height: _height / 15,
                                                 alignment: Alignment.center,
                                                 child: TextFormField(
                                                     // style: TextStyle(fontSize: 40),
@@ -286,7 +324,7 @@ class _PlaceDetailsState extends State<PlaceDetails> {
                                                 padding: EdgeInsets.only(
                                               top: 10.0,
                                             )),
-                                            Text("Duration",
+                                            Text("Duration(Hrs)",
                                                 textAlign: TextAlign.left),
                                             TextField(
                                                 onChanged: (val) {

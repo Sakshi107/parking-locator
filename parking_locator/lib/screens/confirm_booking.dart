@@ -37,7 +37,9 @@ class _ConfirmBookingState extends State<ConfirmBooking> {
         appBar: AppBar(
           backgroundColor: Constants.secColor,
           title: Text("ParkMe"),
+         
         ),
+       
         body: Center(
             child: Container(
                 child: Card(

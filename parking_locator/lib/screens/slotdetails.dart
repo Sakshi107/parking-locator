@@ -106,7 +106,7 @@ class _SlotDetailsState extends State<SlotDetails> {
         .then((obj) => print("Changed the timings of the parking spot"))
         .catchError((error) =>
             print("Failed to change the timings of the parking spot: $error"));
-    return "xyz";
+    return "Successfully updated";
   }
 
   void _submit() async {

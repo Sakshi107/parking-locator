@@ -9,7 +9,7 @@ class PlacesService {
   Future<List<Place>> getPlaces(
       double lat, double lng, BitmapDescriptor icon) async {
     var url = Uri.parse(
-        'http://127.0.0.1:5000/parking/nearme/?lat=$lat&long=$lng&radius=10000');
+        'http://127.0.0.1:5000/parking/nearme/?lat=$lat&long=$lng&radius=5000');
     print(url);
     String token =
         "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRCYWxhbmNlIjoxMDAsInVzZXJJRCI6IjBjNjgyMTk2LWVmMzMtNGJmZS1hNDlkLTAyYjk4ZmMwYjgzMSIsIl9pZCI6IjYwNjZiMjI1ODhiZjJlMjEyODhhOTU1YyIsIm5hbWUiOiJEZWVwYW5zaHUgVmFuZ2FuaSIsImVtYWlsIjoidmFuZ2FuaWRlZXBhbnNodUBnbWFpbC5jb20iLCJtb2JpbGUiOiI5MTY3Njg3NzEyIiwiX192IjowLCJpYXQiOjE2MTczNDMwMTN9.yoQOPwMZTmJ0YBd-jaAeCtHTG_gb76mnupvg0KYsa3w";

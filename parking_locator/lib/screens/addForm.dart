@@ -179,7 +179,7 @@ class _AddFormState extends State<AddForm> {
     print("end" + end);
 //         toTime: formatTimeOfDay(selectedToTime).toString(),
     return await _addSpot.addSpot(
-        _lat, _long, start, end, address, parkingtype, cost);
+        lat, long, start, end, address, parkingtype, cost);
   }
 
   void _submit() async {

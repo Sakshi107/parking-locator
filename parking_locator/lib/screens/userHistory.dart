@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parking_locator/services/dbservice.dart';
 import 'package:parking_locator/constants.dart';
+import 'package:parking_locator/widgets/drawer.dart';
 
 class MyHistory extends StatefulWidget {
   @override
@@ -42,6 +43,7 @@ class _MyHistoryState extends State<MyHistory> {
         backgroundColor: Constants.secColor,
         title: Text('My Bookings'),
       ),
+      drawer:NavDrawer(),
       body: Column(
         children: [
           // Text(spots[1]['address']),
@@ -100,10 +102,11 @@ class _MyHistoryState extends State<MyHistory> {
                                                                     'parkingLocation']
                                                                 [
                                                                 'parkingType']),
-                                                    title: Text("Start time: " +
-                                                            history[index][
-                                                                    'startTime']
-                                                                .toString() +
+                                                    title: Text(
+                                                      // "Start time: " +
+                                                      //       history[index][
+                                                      //               'startTime']
+                                                      //           .toString() +
                                                             "\nParking Address: " +
                                                             history[index][
                                                                     'parkingLocation']
@@ -129,10 +132,10 @@ class _MyHistoryState extends State<MyHistory> {
                                                                 [
                                                                 'parkingType']),
                                                     title: Text(
-                                                        "Estimated Start time: " +
-                                                            history[index][
-                                                                    'estimatedStartTime']
-                                                                .toString() +
+                                                        // "Estimated Start time: " +
+                                                        //     history[index][
+                                                        //             'estimatedStartTime']
+                                                        //         .toString() +
                                                             "\nParking Address: " +
                                                             history[index][
                                                                     'parkingLocation']

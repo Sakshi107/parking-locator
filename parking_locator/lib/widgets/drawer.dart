@@ -19,7 +19,7 @@ class NavDrawer extends StatelessWidget {
               child: Column(
                 children: [
                   Text(
-                    'BOOK PARK',
+                    'PARK ME',
                     style: TextStyle(color: Constants.secColor, fontSize: 28),
                   ),
                   SizedBox(height:10.0),

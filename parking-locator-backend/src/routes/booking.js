@@ -4,6 +4,7 @@ const ParkingHistory = require("../database/models/ParkingHistory");
 const moment = require("moment");
 const getDistanceFromLatLonInKm = require("../helpers/mapDistance");
 const router = express.Router();
+const {TIME_FORMAT}=require('../config');
 
 router.get("/", async (req, res) => {
   res.send("booking service");
@@ -53,10 +54,10 @@ router.post("/bookPrior", async (req, res) => {
     const { userID } = req.user;
     const parkingSpot = await ParkingLocations.findOne({ slotID: spotID });
     if (parkingSpot) {
-      const startTimeObj = moment(startTime);
+      const startTimeObj = moment(startTime,TIME_FORMAT);
       const endTime = startTimeObj.clone().add(duration, "hours");
       const startTimeMinutesSinceDayStart = startTimeObj.diff(startTimeObj.clone().startOf("day"), "minutes");
-      console.log(parkingSpot.activeHours.start, startTimeMinutesSinceDayStart);
+      console.log(parkingSpot.activeHours.start, startTimeMinutesSinceDayStart,);
       if (
         parkingSpot.activeHours.start <= startTimeMinutesSinceDayStart &&
         parkingSpot.activeHours.end > startTimeMinutesSinceDayStart + 60 * duration
@@ -77,7 +78,7 @@ router.post("/bookPrior", async (req, res) => {
       res.json({ status: "FAILED", message: "Slot not found" });
     }
   } catch (err) {
-    res.status(500).send({ message: error.message, errorType: error.name });
+    res.status(500).send({ message: err.message, errorType: err.name });
   }
 });
 
